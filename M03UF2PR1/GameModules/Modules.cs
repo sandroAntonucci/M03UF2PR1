@@ -37,8 +37,6 @@ namespace GameModules
 
             } while (!namesValid);
 
-            
-
             return assignedNames;
         }
 
