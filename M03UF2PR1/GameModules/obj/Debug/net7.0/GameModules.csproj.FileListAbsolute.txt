@@ -1,0 +1,5 @@
+D:\SandroA\M03UF2PR1\M03UF2PR1\GameModules\obj\Debug\net7.0\GameModules.csproj.AssemblyReference.cache
+D:\SandroA\M03UF2PR1\M03UF2PR1\GameModules\obj\Debug\net7.0\GameModules.GeneratedMSBuildEditorConfig.editorconfig
+D:\SandroA\M03UF2PR1\M03UF2PR1\GameModules\obj\Debug\net7.0\GameModules.AssemblyInfoInputs.cache
+D:\SandroA\M03UF2PR1\M03UF2PR1\GameModules\obj\Debug\net7.0\GameModules.AssemblyInfo.cs
+D:\SandroA\M03UF2PR1\M03UF2PR1\GameModules\obj\Debug\net7.0\GameModules.csproj.CoreCompileInputs.cache
