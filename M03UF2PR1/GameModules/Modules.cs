@@ -5,39 +5,14 @@ namespace GameModules
     public class Modules
     {
 
-        public static string[] assignNames()
+        //Comprueba que una cadena tenga 4 palabras separadas por una coma y un espacio (se utiliza en la asignación de nombres)
+        public static bool CheckValidNames(string names)
         {
-            const string MsgNames = "Introdueix els noms dels personatges (4) separats per comes i un espai: ";
-            const string MsgNamesNotValid = "Aquest format no és vàlid.";
+            names = names.Trim(',');
 
-            string[] assignedNames = new string[4];
-            
-            string names;
-            bool namesValid = true;
+            if (names.Split(' ').Length != 4) return false;
 
-
-            do
-            {
-                Console.WriteLine(MsgNames);
-
-                names = Console.ReadLine();
-                names = names.Trim(',');
-
-
-                if (names.Split(' ').Length != 4)
-                {
-                    Console.Write(MsgNamesNotValid);
-                    namesValid = false;
-                }
-                else
-                {
-                    namesValid = true;
-                    assignedNames = names.Split(' ');
-                }
-
-            } while (!namesValid);
-
-            return assignedNames;
+            return true;
         }
 
     }
