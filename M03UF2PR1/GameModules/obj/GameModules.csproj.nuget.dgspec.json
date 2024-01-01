@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\SandroA\\M03UF2PR1\\M03UF2PR1\\GameModules\\GameModules.csproj": {}
+    "C:\\Users\\tboi5\\Desktop\\M3\\M03UF2PR1\\M03UF2PR1\\GameModules\\GameModules.csproj": {}
   },
   "projects": {
-    "D:\\SandroA\\M03UF2PR1\\M03UF2PR1\\GameModules\\GameModules.csproj": {
+    "C:\\Users\\tboi5\\Desktop\\M3\\M03UF2PR1\\M03UF2PR1\\GameModules\\GameModules.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\SandroA\\M03UF2PR1\\M03UF2PR1\\GameModules\\GameModules.csproj",
+        "projectUniqueName": "C:\\Users\\tboi5\\Desktop\\M3\\M03UF2PR1\\M03UF2PR1\\GameModules\\GameModules.csproj",
         "projectName": "GameModules",
-        "projectPath": "D:\\SandroA\\M03UF2PR1\\M03UF2PR1\\GameModules\\GameModules.csproj",
-        "packagesPath": "C:\\Users\\argo\\.nuget\\packages\\",
-        "outputPath": "D:\\SandroA\\M03UF2PR1\\M03UF2PR1\\GameModules\\obj\\",
+        "projectPath": "C:\\Users\\tboi5\\Desktop\\M3\\M03UF2PR1\\M03UF2PR1\\GameModules\\GameModules.csproj",
+        "packagesPath": "C:\\Users\\tboi5\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\tboi5\\Desktop\\M3\\M03UF2PR1\\M03UF2PR1\\GameModules\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\argo\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\tboi5\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -55,7 +55,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.304\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.401\\RuntimeIdentifierGraph.json"
         }
       }
     }
