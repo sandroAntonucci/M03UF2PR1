@@ -13,3 +13,17 @@ D:\SandroA\M03UF2PR1\M03UF2PR1\M03UF2PR1\obj\Debug\net7.0\refint\M03UF2PR1.dll
 D:\SandroA\M03UF2PR1\M03UF2PR1\M03UF2PR1\obj\Debug\net7.0\M03UF2PR1.pdb
 D:\SandroA\M03UF2PR1\M03UF2PR1\M03UF2PR1\obj\Debug\net7.0\M03UF2PR1.genruntimeconfig.cache
 D:\SandroA\M03UF2PR1\M03UF2PR1\M03UF2PR1\obj\Debug\net7.0\ref\M03UF2PR1.dll
+C:\Users\tboi5\Desktop\M3\M03UF2PR1\M03UF2PR1\M03UF2PR1\bin\Debug\net7.0\M03UF2PR1.exe
+C:\Users\tboi5\Desktop\M3\M03UF2PR1\M03UF2PR1\M03UF2PR1\bin\Debug\net7.0\M03UF2PR1.deps.json
+C:\Users\tboi5\Desktop\M3\M03UF2PR1\M03UF2PR1\M03UF2PR1\bin\Debug\net7.0\M03UF2PR1.runtimeconfig.json
+C:\Users\tboi5\Desktop\M3\M03UF2PR1\M03UF2PR1\M03UF2PR1\bin\Debug\net7.0\M03UF2PR1.dll
+C:\Users\tboi5\Desktop\M3\M03UF2PR1\M03UF2PR1\M03UF2PR1\bin\Debug\net7.0\M03UF2PR1.pdb
+C:\Users\tboi5\Desktop\M3\M03UF2PR1\M03UF2PR1\M03UF2PR1\obj\Debug\net7.0\M03UF2PR1.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\tboi5\Desktop\M3\M03UF2PR1\M03UF2PR1\M03UF2PR1\obj\Debug\net7.0\M03UF2PR1.AssemblyInfoInputs.cache
+C:\Users\tboi5\Desktop\M3\M03UF2PR1\M03UF2PR1\M03UF2PR1\obj\Debug\net7.0\M03UF2PR1.AssemblyInfo.cs
+C:\Users\tboi5\Desktop\M3\M03UF2PR1\M03UF2PR1\M03UF2PR1\obj\Debug\net7.0\M03UF2PR1.csproj.CoreCompileInputs.cache
+C:\Users\tboi5\Desktop\M3\M03UF2PR1\M03UF2PR1\M03UF2PR1\obj\Debug\net7.0\M03UF2PR1.dll
+C:\Users\tboi5\Desktop\M3\M03UF2PR1\M03UF2PR1\M03UF2PR1\obj\Debug\net7.0\refint\M03UF2PR1.dll
+C:\Users\tboi5\Desktop\M3\M03UF2PR1\M03UF2PR1\M03UF2PR1\obj\Debug\net7.0\M03UF2PR1.pdb
+C:\Users\tboi5\Desktop\M3\M03UF2PR1\M03UF2PR1\M03UF2PR1\obj\Debug\net7.0\M03UF2PR1.genruntimeconfig.cache
+C:\Users\tboi5\Desktop\M3\M03UF2PR1\M03UF2PR1\M03UF2PR1\obj\Debug\net7.0\ref\M03UF2PR1.dll
