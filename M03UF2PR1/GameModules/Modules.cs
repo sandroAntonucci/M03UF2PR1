@@ -1,19 +1,32 @@
 ﻿using System.Data;
 
-namespace GameModules
+namespace GameModules;
+
+public class Modules
 {
-    public class Modules
+
+    // Comprova si els noms s'han introduit correctament (retorna true o false), i si s'han introduit correctament els assigna per referència a variables globals
+    public static bool CheckAndAssignValidNames(string names, ref string archerName, ref string barbarianName, ref string mageName, ref string druidName)
     {
+        
+        names = names.Replace(",", "");
 
-        //Comprueba que una cadena tenga 4 palabras separadas por una coma y un espacio (se utiliza en la asignación de nombres)
-        public static bool CheckValidNames(string names)
+        string[] splittedNames = names.Split(' ');
+
+        // Comprova si el format és invàlid (retorna false si ho es)
+        if (splittedNames.Length != 4)
         {
-            names = names.Trim(',');
-
-            if (names.Split(' ').Length != 4) return false;
-
-            return true;
+            return false;
+        }
+        // Assigna els noms per referència a variables globals si el format és vàlid
+        else
+        {
+            archerName = splittedNames[0];
+            barbarianName = splittedNames[1];
+            mageName  = splittedNames[2];
+            druidName = splittedNames[3];
         }
 
+        return true;
     }
 }

@@ -7,14 +7,27 @@
   "targets": {
     ".NETCoreApp,Version=v7.0": {
       "M03UF2PR1/1.0.0": {
+        "dependencies": {
+          "GameModules": "1.0.0"
+        },
         "runtime": {
           "M03UF2PR1.dll": {}
+        }
+      },
+      "GameModules/1.0.0": {
+        "runtime": {
+          "GameModules.dll": {}
         }
       }
     }
   },
   "libraries": {
     "M03UF2PR1/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "GameModules/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

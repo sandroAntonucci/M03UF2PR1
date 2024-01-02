@@ -1,11 +1,30 @@
 {
   "version": 3,
   "targets": {
-    "net7.0": {}
+    "net7.0": {
+      "GameModules/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v7.0",
+        "compile": {
+          "bin/placeholder/GameModules.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/GameModules.dll": {}
+        }
+      }
+    }
   },
-  "libraries": {},
+  "libraries": {
+    "GameModules/1.0.0": {
+      "type": "project",
+      "path": "../GameModules/GameModules.csproj",
+      "msbuildProject": "../GameModules/GameModules.csproj"
+    }
+  },
   "projectFileDependencyGroups": {
-    "net7.0": []
+    "net7.0": [
+      "GameModules >= 1.0.0"
+    ]
   },
   "packageFolders": {
     "C:\\Users\\tboi5\\.nuget\\packages\\": {}
@@ -33,7 +52,11 @@
       "frameworks": {
         "net7.0": {
           "targetAlias": "net7.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\tboi5\\Desktop\\M3\\M03UF2PR1\\M03UF2PR1\\M03UF2PR1\\GameModules\\GameModules.csproj": {
+              "projectPath": "C:\\Users\\tboi5\\Desktop\\M3\\M03UF2PR1\\M03UF2PR1\\M03UF2PR1\\GameModules\\GameModules.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

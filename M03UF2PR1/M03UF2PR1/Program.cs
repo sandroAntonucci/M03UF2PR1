@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading;
+using GameModules;
 
 namespace GameProject
 {
@@ -28,7 +29,10 @@ namespace GameProject
             const string MsgStart = " Benvingut a Herois vs Monstre!\n Que vols fer?";
             const string MsgPlay = "\n 1. Iniciar una nova batalla";
             const string MsgQuit = " 0. Sortir\n";
+            const string MsgCharNames = "Introdueix els noms dels personatges (arquera, bàrbar, mag i druida en aquest ordre) separats per comes i un espai (et queden {0} intents): \n\n - ";
+            const string MsgCharNamesNotValid = "\nAquest format no és vàlid.\n";
             const string MsgCharStats = "\nOK! Començem amb la creació de personatges. ";
+            
 
             const string MsgDecoration = "\n\n-----------------------------------------\n\n";
             const string MsgDecorationArcher = "\n\n--- Estadístiques d'arquera ---\n\n";
@@ -39,6 +43,7 @@ namespace GameProject
 
             const string MsgOutOfTriesStats = "\nT'has equivocat 3 vegades, torna a introduir els atributs.";
             const string MsgOutOfTriesCharacters = "\nT'has equivocat 3 vegades donant atributs als personatges, tornes al menu principal.";
+            const string MsgOutOfTriesNames = "\nT'has equivocat 3 vegades donant noms als personatges, tornes al menu principal.";
 
             const string MsgArcherName = "Arquera";
             const string MsgArcherHP = "\n - Introdueix la vida de l'arquera (entre 1500 i 2000): ";
@@ -80,7 +85,7 @@ namespace GameProject
             const string MsgBattle = "Comença la batalla!";
             const string MsgTurn = "Torn ";
 
-            int startGame, menuTries, statsTries = 3, characterTries = 3, turnTries = 3, actionChosen = 0, turn = 1;
+            int startGame, menuTries, statsTries = 3, namesTries = 3,characterTries = 3, turnTries = 3, actionChosen = 0, turn = 1;
 
             double archerHP = 0, archerMaxHP = 0, archerDMG = 0, archerReduct = 0, currentArcherReduct = 0, archerSpecialCooldown = 0;
             double barbarianHP = 0, barbarianMaxHP = 0, barbarianDMG = 0, barbarianReduct = 0, currentBarbarianReduct = 0, barbarianSpecialCooldown = 0, barbarianReductSpecialTurns = 0;
@@ -88,7 +93,7 @@ namespace GameProject
             double druidHP = 0, druidMaxHP = 0, druidDMG = 0, druidReduct = 0, currentDruidReduct = 0, druidSpecialCooldown = 0;
             double monsterHP = 0, monsterDMG = 0, monsterReduct = 0, monsterStun = 0;
 
-
+            string archerName, barbarianName, mageName, druidName;
 
             bool exitGame = false, archerCompleted = false, barbarianCompleted = false, mageCompleted = false, druidCompleted = false, monsterCompleted = false, turnEnded = false;
 
@@ -132,7 +137,7 @@ namespace GameProject
                     startGame = Zero;
                 }
 
-                //Menu principal -0 és sortir i 1 és jugar -
+                //Menu principal - 0 és sortir i 1 és jugar -
                 switch (startGame)
                 {
                     case Zero:         // Sortida
@@ -143,11 +148,53 @@ namespace GameProject
 
                     case One:         // Joc
 
-                        Console.WriteLine(MsgCharStats);
-                        Console.ReadKey();
+
+                        // Introducció de noms
+                        // Es buiden els noms anteriors per a fer la comprovació de que s'han introduit correctament després
+
+                        archerName = "";
+                        barbarianName = "";
+                        mageName = "";
+                        druidName = "";
+
+                        // Es comprova que els noms s'han introduit correctament i s'assignen als personatges, si no, es resta un intent (3) i es tornen a demanar
+                        do
+                        {
+                            if (namesTries < Three)
+                            {
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                Console.WriteLine(MsgCharNamesNotValid);
+                            }
+
+                            Console.ForegroundColor = ConsoleColor.Yellow;
+                            Console.Write(MsgCharNames, namesTries);
+
+                            namesTries--;
+
+                            Console.ForegroundColor = ConsoleColor.Green;
+
+                        } while (!Modules.CheckAndAssignValidNames(Console.ReadLine(), ref archerName, ref barbarianName, ref mageName, ref druidName) && namesTries > Zero);
+
+                        Console.WriteLine(archerName + " " + barbarianName + " " + mageName + " " + druidName + " ");
+
+                        // Si l'usuari s'ha quedat sense intents i el nom d'algun personatge esta buit(en aquest cas l'arquera) significa que no ha introduit els noms correctament i torna al menú principal
+                        if(namesTries == 0 && archerName == "")
+                        {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine(MsgOutOfTriesNames);
+                            Console.ReadKey();
+                            Console.Clear();
+                            break;
+                        }
+
+                        namesTries = 3;
 
                         // Introducció de característiques
                         // Estadístiques Arquera
+
+                        Console.WriteLine(MsgCharStats);
+                        Console.ReadKey();
+                        Console.Clear();
 
                         characterTries = Three;
                         archerCompleted = false;
