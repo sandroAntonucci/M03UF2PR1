@@ -32,11 +32,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\tboi5\\Desktop\\M3\\M03UF2PR1\\M03UF2PR1\\M03UF2PR1\\M03UF2PR1\\M03UF2PR1.csproj",
+      "projectUniqueName": "C:\\Users\\tboi5\\Desktop\\M3UF2PT1\\M03UF2PR1\\M03UF2PR1\\M03UF2PR1\\M03UF2PR1.csproj",
       "projectName": "M03UF2PR1",
-      "projectPath": "C:\\Users\\tboi5\\Desktop\\M3\\M03UF2PR1\\M03UF2PR1\\M03UF2PR1\\M03UF2PR1\\M03UF2PR1.csproj",
+      "projectPath": "C:\\Users\\tboi5\\Desktop\\M3UF2PT1\\M03UF2PR1\\M03UF2PR1\\M03UF2PR1\\M03UF2PR1.csproj",
       "packagesPath": "C:\\Users\\tboi5\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\tboi5\\Desktop\\M3\\M03UF2PR1\\M03UF2PR1\\M03UF2PR1\\M03UF2PR1\\obj\\",
+      "outputPath": "C:\\Users\\tboi5\\Desktop\\M3UF2PT1\\M03UF2PR1\\M03UF2PR1\\M03UF2PR1\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\tboi5\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -53,8 +53,8 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "projectReferences": {
-            "C:\\Users\\tboi5\\Desktop\\M3\\M03UF2PR1\\M03UF2PR1\\M03UF2PR1\\GameModules\\GameModules.csproj": {
-              "projectPath": "C:\\Users\\tboi5\\Desktop\\M3\\M03UF2PR1\\M03UF2PR1\\M03UF2PR1\\GameModules\\GameModules.csproj"
+            "C:\\Users\\tboi5\\Desktop\\M3UF2PT1\\M03UF2PR1\\M03UF2PR1\\GameModules\\GameModules.csproj": {
+              "projectPath": "C:\\Users\\tboi5\\Desktop\\M3UF2PT1\\M03UF2PR1\\M03UF2PR1\\GameModules\\GameModules.csproj"
             }
           }
         }
