@@ -29,4 +29,13 @@ public class Modules
 
         return true;
     }
+
+    // Dificultats fàcil i difícil - Agafa el valors donats i els assigna a la variable pertinent per referència
+
+    public static void AssignAttributes(ref double characterHP, ref double characterDMG, ref double characterReduct, int assignedHP, int assignedDMG, int assignedReduct)
+    {
+        characterHP = assignedHP; 
+        characterDMG = assignedDMG; 
+        characterReduct = assignedReduct; 
+    }
 }

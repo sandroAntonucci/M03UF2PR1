@@ -122,4 +122,65 @@ namespace TestProjectGameModules
 
         }
     }
+
+    
+    [TestClass]
+    public class UnitTestAssignAttributes
+    {
+
+        [TestMethod]
+        public void AssignAttributes_PositiveAttributes()
+        {
+
+            //Arrange
+            const int HP = 100, DMG = 40, Reduct = 30;
+            double actualHP = 20, actualDMG = 40, actualReduct = 60;
+
+            //Act
+            Modules.AssignAttributes(ref actualHP, ref actualDMG, ref actualReduct, HP, DMG, Reduct);
+
+            //Assert
+            Assert.AreEqual(actualHP, HP);
+            Assert.AreEqual(actualDMG, DMG);
+            Assert.AreEqual(actualReduct, Reduct);
+
+        }
+
+        [TestMethod]
+        public void AssignAttributes_NegativeAttributes()
+        {
+
+            //Arrange
+            const int HP = -100, DMG = -40, Reduct = -30;
+            double actualHP = 0, actualDMG = 0, actualReduct = 0;
+
+            //Act
+            Modules.AssignAttributes(ref actualHP, ref actualDMG, ref actualReduct, HP, DMG, Reduct);
+
+            //Assert
+            Assert.AreEqual(actualHP, HP);
+            Assert.AreEqual(actualDMG, DMG);
+            Assert.AreEqual(actualReduct, Reduct);
+
+        }
+
+        [TestMethod]
+        public void AssignAttributes_AttributesEqualToZero()
+        {
+
+            //Arrange
+            const int HP = 20, DMG = 40, Reduct = 60;
+            double actualHP = 0, actualDMG = 0, actualReduct = 0;
+
+            //Act
+            Modules.AssignAttributes(ref actualHP, ref actualDMG, ref actualReduct, HP, DMG, Reduct);
+
+            //Assert
+            Assert.AreEqual(actualHP, HP);
+            Assert.AreEqual(actualDMG, DMG);
+            Assert.AreEqual(actualReduct, Reduct);
+
+        }
+
+    }
 }
