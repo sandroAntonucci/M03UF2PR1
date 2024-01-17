@@ -11,7 +11,7 @@ namespace GameProject
         static void Main()
         {
 
-            const int Zero = 0, One = 1, Two = 2, Three = 3, Percent = 100, Five = 5;
+            const int Zero = 0, One = 1, Two = 2, Three = 3, Four = 4,Percent = 100, Five = 5;
             const int ArcherMinRangeHP = 1500, ArcherMaxRangeHP = 2000, ArcherMinRangeDMG = 180, ArcherMaxRangeDMG = 300, ArcherMinRangeReduct = 25, ArcherMaxRangeReduct = 40;
             const int BarbarianMinRangeHP = 3000, BarbarianMaxRangeHP = 3750, BarbarianMinRangeDMG = 150, BarbarianMaxRangeDMG = 250, BarbarianMinRangeReduct = 35, BarbarianMaxRangeReduct = 45;
             const int MageMinRangeHP = 1000, MageMaxRangeHP = 1500, MageMinRangeDMG = 300, MageMaxRangeDMG = 350, MageMinRangeReduct = 20, MageMaxRangeReduct = 35;
@@ -30,8 +30,9 @@ namespace GameProject
             const string MsgPlay = "\n 1. Iniciar una nova batalla";
             const string MsgQuit = " 0. Sortir\n";
             const string MsgCharNames = "Introdueix els noms dels personatges (arquera, bàrbar, mag i druida en aquest ordre) separats per comes i un espai (et queden {0} intents): \n\n - ";
-            const string MsgCharNamesNotValid = "\nAquest format no és vàlid.\n";
             const string MsgCharStats = "\nOK! Començem amb la creació de personatges. ";
+            const string MsgGameDifficulty = "\nOK! Començem amb el selector de dificultat";
+            const string MsgDifficultySelector = " · Selecciona una dificultat: \n\n  1.- Fàcil: Agafa el valor més alt del rang d’atributs dels personatges, i el més baix del monstre automàticament.\n  2.- Difícil:  Agafa el valor més baix del rang d’atributs dels personatges, i el més alt del monstre automàticament\n  3.- Personalitzat: Introduiràs els atributs dels personatges manualment\n  4.- Random: S'assignaràn els valors aleatoriament\n\n";
             
 
             const string MsgDecoration = "\n\n-----------------------------------------\n\n";
@@ -41,9 +42,10 @@ namespace GameProject
             const string MsgDecorationDruid = "\n\n--- Estadístiques de druida ---\n\n";
             const string MsgDecorationMonster = "\n\n--- Estadístiques de monstre ---\n\n";
 
-            const string MsgOutOfTriesStats = "\nT'has equivocat 3 vegades, torna a introduir els atributs.";
-            const string MsgOutOfTriesCharacters = "\nT'has equivocat 3 vegades donant atributs als personatges, tornes al menu principal.";
-            const string MsgOutOfTriesNames = "\nT'has equivocat 3 vegades donant noms als personatges, tornes al menu principal.";
+            const string MsgOutOfTriesStats = "\nT'has equivocat 3 vegades, torna a introduïr els atributs.";
+            const string MsgOutOfTriesCharacters = "\nT'has equivocat 3 vegades donant atributs als personatges, tornes al menú principal.";
+            const string MsgOutOfTriesNames = "\nT'has equivocat 3 vegades donant noms als personatges, tornes al menú principal.";
+            const string MsgOutOfTriesDifficulty = "\nT'has equivocat 3 vegades escollint la dificultat, tornes al menú principal.";
 
             const string MsgArcherName = "Arquera";
             const string MsgArcherHP = "\n - Introdueix la vida de l'arquera (entre 1500 i 2000): ";
@@ -85,7 +87,7 @@ namespace GameProject
             const string MsgBattle = "Comença la batalla!";
             const string MsgTurn = "Torn ";
 
-            int startGame, menuTries, statsTries = 3, namesTries = 3,characterTries = 3, turnTries = 3, actionChosen = 0, turn = 1;
+            int startGame, menuTries, difficulty, difficultyTries = 3, statsTries = 3, namesTries = 3,characterTries = 3, turnTries = 3, actionChosen = 0, turn = 1;
 
             double archerHP = 0, archerMaxHP = 0, archerDMG = 0, archerReduct = 0, currentArcherReduct = 0, archerSpecialCooldown = 0;
             double barbarianHP = 0, barbarianMaxHP = 0, barbarianDMG = 0, barbarianReduct = 0, currentBarbarianReduct = 0, barbarianSpecialCooldown = 0, barbarianReductSpecialTurns = 0;
@@ -157,13 +159,13 @@ namespace GameProject
                         mageName = "";
                         druidName = "";
 
-                        // Es comprova que els noms s'han introduit correctament i s'assignen als personatges, si no, es resta un intent (3) i es tornen a demanar
+                        // Es comprova que els noms s'han introduït correctament i s'assignen als personatges, si no, es resta un intent (3) i es tornen a demanar
                         do
                         {
                             if (namesTries < Three)
                             {
                                 Console.ForegroundColor = ConsoleColor.Red;
-                                Console.WriteLine(MsgCharNamesNotValid);
+                                Console.WriteLine(MsgInputNotValid);
                             }
 
                             Console.ForegroundColor = ConsoleColor.Yellow;
@@ -175,10 +177,8 @@ namespace GameProject
 
                         } while (!Modules.CheckAndAssignValidNames(Console.ReadLine(), ref archerName, ref barbarianName, ref mageName, ref druidName) && namesTries > Zero);
 
-                        Console.WriteLine(archerName + " " + barbarianName + " " + mageName + " " + druidName + " ");
-
                         // Si l'usuari s'ha quedat sense intents i el nom d'algun personatge esta buit(en aquest cas l'arquera) significa que no ha introduit els noms correctament i torna al menú principal
-                        if(namesTries == 0 && archerName == "")
+                        if(archerName == "")
                         {
                             Console.ForegroundColor = ConsoleColor.Red;
                             Console.WriteLine(MsgOutOfTriesNames);
@@ -187,7 +187,100 @@ namespace GameProject
                             break;
                         }
 
-                        namesTries = 3;
+                        namesTries = Three;
+
+                        // Selector de dificultat
+
+                        Console.WriteLine(MsgGameDifficulty);
+                        Console.ReadKey();
+                        Console.Clear();
+
+                        // Es comprova que la dificultat s'ha introduït correctament, es resta un intent (3) i es tornen a demanar si no
+                        do
+                        {
+                            if (difficultyTries < Three)
+                            {
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                Console.WriteLine(MsgInputNotValid);
+                            }
+
+                            Console.ForegroundColor = ConsoleColor.Yellow;
+                            Console.Write(MsgDifficultySelector);
+                            Console.Write(MsgAction);
+
+                            Console.ForegroundColor = ConsoleColor.Green;
+                            difficulty = Convert.ToInt32(Console.ReadLine());
+
+                            difficultyTries--;
+                        
+                        } while (!(difficulty > Zero && difficulty <= Four || difficultyTries == Zero));
+                        
+                        // Si l'usuari s'ha quedat sense intents i no ha introduït la dificultat correctament li informa i torna al menú principal
+                        if (!(difficulty > Zero && difficulty <= Four))
+                        {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine(MsgOutOfTriesDifficulty);
+                            Console.ReadKey();
+                            Console.Clear();
+                            break;
+                        }
+
+                        difficultyTries = Three;
+
+                        // Assigna les característiques a cada personatge depenent de la dificultat
+                        switch (difficulty)
+                        {
+
+                            // Dificultat fàcil - Agafa el valor més alt del rang d’atributs dels personatges, i el més baix del monstre automàticament.
+                            case One:
+                                
+                                // Arquera
+                                Modules.AssignAttributes(ref archerHP, ref archerDMG, ref archerReduct, ArcherMaxRangeHP, ArcherMaxRangeDMG, ArcherMaxRangeReduct);
+
+                                // Bàrbar
+                                Modules.AssignAttributes(ref barbarianHP, ref barbarianDMG, ref archerReduct, BarbarianMaxRangeHP, BarbarianMaxRangeDMG, BarbarianMaxRangeReduct);
+
+                                // Mag
+                                Modules.AssignAttributes(ref mageHP, ref mageDMG, ref mageReduct, MageMaxRangeHP, MageMaxRangeDMG, MageMaxRangeReduct);
+
+                                // Druida
+                                Modules.AssignAttributes(ref druidHP, ref druidDMG, ref druidReduct, DruidMaxRangeHP, DruidMaxRangeDMG, DruidMaxRangeReduct);
+
+                                // Monstre
+                                Modules.AssignAttributes(ref monsterHP, ref monsterDMG, ref monsterReduct, MonsterMinRangeHP, MonsterMinRangeDMG, MonsterMinRangeReduct);
+
+                                break;
+
+                            // Dificultad difícil - Agafa el valor més baix del rang d'atributs dels personatges, i el més alt del monstre automàticament.
+                            case Two:
+
+                                // Arquera
+                                Modules.AssignAttributes(ref archerHP, ref archerDMG, ref archerReduct, ArcherMinRangeHP, ArcherMinRangeDMG, ArcherMinRangeReduct);
+
+                                // Bàrbar
+                                Modules.AssignAttributes(ref barbarianHP, ref barbarianDMG, ref archerReduct, BarbarianMinRangeHP, BarbarianMinRangeDMG, BarbarianMinRangeReduct);
+
+                                // Mag
+                                Modules.AssignAttributes(ref mageHP, ref mageDMG, ref mageReduct, MageMinRangeHP, MageMinRangeDMG, MageMinRangeReduct);
+
+                                // Druida
+                                Modules.AssignAttributes(ref druidHP, ref druidDMG, ref druidReduct, DruidMinRangeHP, DruidMinRangeDMG, DruidMinRangeReduct);
+
+                                // Monstre
+                                Modules.AssignAttributes(ref monsterHP, ref monsterDMG, ref monsterReduct, MonsterMaxRangeHP, MonsterMaxRangeDMG, MonsterMaxRangeReduct);
+
+                                break;
+
+
+
+                            case Three:
+                               
+                                break;
+                            case Four:
+                              
+                                break;
+
+                        }
 
                         // Introducció de característiques
                         // Estadístiques Arquera
@@ -238,7 +331,7 @@ namespace GameProject
                                     statsTries--;
                                 }
                             }
-
+                              
                             // Reducció de dany arquera
                             while ((archerReduct < ArcherMinRangeReduct || archerReduct > ArcherMaxRangeReduct) && statsTries > Zero)
                             {
