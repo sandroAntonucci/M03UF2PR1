@@ -30,12 +30,26 @@ public class Modules
         return true;
     }
 
-    // Dificultats fàcil i difícil - Agafa el valors donats i els assigna a la variable pertinent per referència
-
-    public static void AssignAttributes(ref double characterHP, ref double characterDMG, ref double characterReduct, int assignedHP, int assignedDMG, int assignedReduct)
+    // Agafa el valors donats i els assigna a la variable pertinent per referència
+    public static void AssignAttributes(ref double characterHP, ref double characterMaxHP, ref double characterDMG, ref double characterReduct, int assignedHP, int assignedDMG, int assignedReduct)
     {
-        characterHP = assignedHP; 
+        characterHP = assignedHP;
+        characterMaxHP = assignedHP;
         characterDMG = assignedDMG; 
         characterReduct = assignedReduct; 
+    }
+
+    // Sobrecàrrega - Fa el mateix que el primer AssignAttributes però la versió del monstre ja que no té maxHP
+    public static void AssignAttributes(ref double characterHP, ref double characterDMG, ref double characterReduct, int assignedHP, int assignedDMG, int assignedReduct)
+    {
+        characterHP = assignedHP;
+        characterDMG = assignedDMG;
+        characterReduct = assignedReduct;
+    }
+
+    // Comprova que els atributs estiguin dins del rang
+    public static bool CheckValidAttributes(double attributeValue, int minAttributeValue, int maxAttributeValue)
+    {
+        return attributeValue >= minAttributeValue && attributeValue <= maxAttributeValue;
     }
 }

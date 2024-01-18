@@ -235,16 +235,16 @@ namespace GameProject
                             case One:
                                 
                                 // Arquera
-                                Modules.AssignAttributes(ref archerHP, ref archerDMG, ref archerReduct, ArcherMaxRangeHP, ArcherMaxRangeDMG, ArcherMaxRangeReduct);
+                                Modules.AssignAttributes(ref archerHP, ref archerMaxHP, ref archerDMG, ref archerReduct, ArcherMaxRangeHP, ArcherMaxRangeDMG, ArcherMaxRangeReduct);
 
                                 // Bàrbar
-                                Modules.AssignAttributes(ref barbarianHP, ref barbarianDMG, ref archerReduct, BarbarianMaxRangeHP, BarbarianMaxRangeDMG, BarbarianMaxRangeReduct);
+                                Modules.AssignAttributes(ref barbarianHP, ref barbarianMaxHP, ref barbarianDMG, ref barbarianReduct, BarbarianMaxRangeHP, BarbarianMaxRangeDMG, BarbarianMaxRangeReduct);
 
                                 // Mag
-                                Modules.AssignAttributes(ref mageHP, ref mageDMG, ref mageReduct, MageMaxRangeHP, MageMaxRangeDMG, MageMaxRangeReduct);
+                                Modules.AssignAttributes(ref mageHP, ref mageMaxHP, ref mageDMG, ref mageReduct, MageMaxRangeHP, MageMaxRangeDMG, MageMaxRangeReduct);
 
                                 // Druida
-                                Modules.AssignAttributes(ref druidHP, ref druidDMG, ref druidReduct, DruidMaxRangeHP, DruidMaxRangeDMG, DruidMaxRangeReduct);
+                                Modules.AssignAttributes(ref druidHP, ref druidMaxHP, ref druidDMG, ref druidReduct, DruidMaxRangeHP, DruidMaxRangeDMG, DruidMaxRangeReduct);
 
                                 // Monstre
                                 Modules.AssignAttributes(ref monsterHP, ref monsterDMG, ref monsterReduct, MonsterMinRangeHP, MonsterMinRangeDMG, MonsterMinRangeReduct);
@@ -255,16 +255,16 @@ namespace GameProject
                             case Two:
 
                                 // Arquera
-                                Modules.AssignAttributes(ref archerHP, ref archerDMG, ref archerReduct, ArcherMinRangeHP, ArcherMinRangeDMG, ArcherMinRangeReduct);
+                                Modules.AssignAttributes(ref archerHP, ref archerMaxHP,ref archerDMG, ref archerReduct, ArcherMinRangeHP, ArcherMinRangeDMG, ArcherMinRangeReduct);
 
                                 // Bàrbar
-                                Modules.AssignAttributes(ref barbarianHP, ref barbarianDMG, ref archerReduct, BarbarianMinRangeHP, BarbarianMinRangeDMG, BarbarianMinRangeReduct);
+                                Modules.AssignAttributes(ref barbarianHP, ref barbarianMaxHP, ref barbarianDMG, ref archerReduct, BarbarianMinRangeHP, BarbarianMinRangeDMG, BarbarianMinRangeReduct);
 
                                 // Mag
-                                Modules.AssignAttributes(ref mageHP, ref mageDMG, ref mageReduct, MageMinRangeHP, MageMinRangeDMG, MageMinRangeReduct);
+                                Modules.AssignAttributes(ref mageHP, ref mageMaxHP, ref mageDMG, ref mageReduct, MageMinRangeHP, MageMinRangeDMG, MageMinRangeReduct);
 
                                 // Druida
-                                Modules.AssignAttributes(ref druidHP, ref druidDMG, ref druidReduct, DruidMinRangeHP, DruidMinRangeDMG, DruidMinRangeReduct);
+                                Modules.AssignAttributes(ref druidHP, ref druidMaxHP, ref druidDMG, ref druidReduct, DruidMinRangeHP, DruidMinRangeDMG, DruidMinRangeReduct);
 
                                 // Monstre
                                 Modules.AssignAttributes(ref monsterHP, ref monsterDMG, ref monsterReduct, MonsterMaxRangeHP, MonsterMaxRangeDMG, MonsterMaxRangeReduct);
@@ -273,9 +273,65 @@ namespace GameProject
 
 
 
+                            // Dificultat personalitzada - L'usuari introdueix els valors manualment
                             case Three:
-                               
+
+
+                                // Arquera
+
+                                // Vida
+
+                                while (!Modules.CheckValidAttributes(archerHP, ArcherMinRangeHP, ArcherMaxRangeHP) && statsTries > Zero)
+                                {
+                                    Console.Write(MsgArcherHP);
+                                    archerHP = Convert.ToDouble(Console.ReadLine());
+                                    archerMaxHP = archerHP;
+
+                                    if (!Modules.CheckValidAttributes(archerHP, ArcherMinRangeHP, ArcherMaxRangeHP))
+                                    {
+                                        Console.WriteLine(MsgInputNotValid);
+                                        statsTries--;
+                                    }
+                                };
+
+                                // Dany
+
+                                while (!Modules.CheckValidAttributes(archerDMG, ArcherMinRangeDMG, ArcherMaxRangeDMG) && statsTries > Zero)
+                                {
+                                    Console.Write(MsgArcherHP);
+                                    archerDMG = Convert.ToDouble(Console.ReadLine());
+
+                                    if (!Modules.CheckValidAttributes(archerDMG, ArcherMinRangeDMG, ArcherMaxRangeDMG))
+                                    {
+                                        Console.WriteLine(MsgInputNotValid);
+                                        statsTries--;
+                                    }
+                                };
+
+                                // Reducció de dany
+
+                                while (!Modules.CheckValidAttributes(archerReduct, ArcherMinRangeReduct, ArcherMaxRangeReduct) && statsTries > Zero)
+                                {
+                                    Console.Write(MsgArcherHP);
+                                    archerDMG = Convert.ToDouble(Console.ReadLine());
+
+                                    if (!Modules.CheckValidAttributes(archerDMG, ArcherMinRangeDMG, ArcherMaxRangeDMG))
+                                    {
+                                        Console.WriteLine(MsgInputNotValid);
+                                        statsTries--;
+                                    }
+                                };
+
+
+
+
+
+
+
+
                                 break;
+
+
                             case Four:
                               
                                 break;

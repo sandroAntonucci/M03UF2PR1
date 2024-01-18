@@ -134,13 +134,14 @@ namespace TestProjectGameModules
 
             //Arrange
             const int HP = 100, DMG = 40, Reduct = 30;
-            double actualHP = 20, actualDMG = 40, actualReduct = 60;
+            double actualHP = 20, actualMaxHP = 20, actualDMG = 40, actualReduct = 60;
 
             //Act
-            Modules.AssignAttributes(ref actualHP, ref actualDMG, ref actualReduct, HP, DMG, Reduct);
+            Modules.AssignAttributes(ref actualHP, ref actualMaxHP, ref actualDMG, ref actualReduct, HP, DMG, Reduct);
 
             //Assert
             Assert.AreEqual(actualHP, HP);
+            Assert.AreEqual(actualMaxHP, HP);
             Assert.AreEqual(actualDMG, DMG);
             Assert.AreEqual(actualReduct, Reduct);
 
@@ -152,13 +153,14 @@ namespace TestProjectGameModules
 
             //Arrange
             const int HP = -100, DMG = -40, Reduct = -30;
-            double actualHP = 0, actualDMG = 0, actualReduct = 0;
+            double actualHP = 0, actualMaxHP = 0, actualDMG = 0, actualReduct = 0;
 
             //Act
-            Modules.AssignAttributes(ref actualHP, ref actualDMG, ref actualReduct, HP, DMG, Reduct);
+            Modules.AssignAttributes(ref actualHP, ref actualMaxHP, ref actualDMG, ref actualReduct, HP, DMG, Reduct);
 
             //Assert
             Assert.AreEqual(actualHP, HP);
+            Assert.AreEqual(actualMaxHP, HP);
             Assert.AreEqual(actualDMG, DMG);
             Assert.AreEqual(actualReduct, Reduct);
 
@@ -170,13 +172,14 @@ namespace TestProjectGameModules
 
             //Arrange
             const int HP = 20, DMG = 40, Reduct = 60;
-            double actualHP = 0, actualDMG = 0, actualReduct = 0;
+            double actualHP = 0, actualMaxHP = 0, actualDMG = 0, actualReduct = 0;
 
             //Act
-            Modules.AssignAttributes(ref actualHP, ref actualDMG, ref actualReduct, HP, DMG, Reduct);
+            Modules.AssignAttributes(ref actualHP, ref actualMaxHP, ref actualDMG, ref actualReduct, HP, DMG, Reduct);
 
             //Assert
             Assert.AreEqual(actualHP, HP);
+            Assert.AreEqual(actualMaxHP, HP);
             Assert.AreEqual(actualDMG, DMG);
             Assert.AreEqual(actualReduct, Reduct);
 
