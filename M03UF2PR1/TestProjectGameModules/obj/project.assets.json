@@ -2313,32 +2313,34 @@
     ]
   },
   "packageFolders": {
-    "/Users/sandro/.nuget/packages/": {}
+    "C:\\Users\\tboi5\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/sandro/Desktop/ITB/M3/UF2/M03UF2PR1/M03UF2PR1/TestProjectGameModules/TestProjectGameModules.csproj",
+      "projectUniqueName": "C:\\Users\\tboi5\\Desktop\\M3UF2PT1\\M03UF2PR1\\M03UF2PR1\\TestProjectGameModules\\TestProjectGameModules.csproj",
       "projectName": "TestProjectGameModules",
-      "projectPath": "/Users/sandro/Desktop/ITB/M3/UF2/M03UF2PR1/M03UF2PR1/TestProjectGameModules/TestProjectGameModules.csproj",
-      "packagesPath": "/Users/sandro/.nuget/packages/",
-      "outputPath": "/Users/sandro/Desktop/ITB/M3/UF2/M03UF2PR1/M03UF2PR1/TestProjectGameModules/obj/",
+      "projectPath": "C:\\Users\\tboi5\\Desktop\\M3UF2PT1\\M03UF2PR1\\M03UF2PR1\\TestProjectGameModules\\TestProjectGameModules.csproj",
+      "packagesPath": "C:\\Users\\tboi5\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\tboi5\\Desktop\\M3UF2PT1\\M03UF2PR1\\M03UF2PR1\\TestProjectGameModules\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/Users/sandro/.nuget/NuGet/NuGet.Config"
+        "C:\\Users\\tboi5\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net7.0"
       ],
       "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net7.0": {
           "targetAlias": "net7.0",
           "projectReferences": {
-            "/Users/sandro/Desktop/ITB/M3/UF2/M03UF2PR1/M03UF2PR1/GameModules/GameModules.csproj": {
-              "projectPath": "/Users/sandro/Desktop/ITB/M3/UF2/M03UF2PR1/M03UF2PR1/GameModules/GameModules.csproj"
+            "C:\\Users\\tboi5\\Desktop\\M3UF2PT1\\M03UF2PR1\\M03UF2PR1\\GameModules\\GameModules.csproj": {
+              "projectPath": "C:\\Users\\tboi5\\Desktop\\M3UF2PT1\\M03UF2PR1\\M03UF2PR1\\GameModules\\GameModules.csproj"
             }
           }
         }
@@ -2386,7 +2388,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/7.0.311/RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.401\\RuntimeIdentifierGraph.json"
       }
     }
   }

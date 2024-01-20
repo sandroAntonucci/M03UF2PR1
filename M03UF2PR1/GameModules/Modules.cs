@@ -53,4 +53,25 @@ public class Modules
     {
         return attributeValue >= minAttributeValue && attributeValue <= maxAttributeValue;
     }
+
+    // Fa reset de les variables utilitzades per a completar les estadístiques
+    public static void ResetStatsCheckers(ref bool statsCompleted, ref int statIndexer, ref int statsTries)
+    {
+        statsCompleted = false;
+        statIndexer = 0;
+        statsTries = 3;
+    }
+
+    // Fa reset de les variables utilitzades per a completar les estadístiques i dels booleans que marquen que s'ha completat un personatge
+    public static void ResetStatsCheckers(ref bool statsCompleted, ref int statIndexer, ref int statsTries, ref bool archerStatsCompleted, ref bool barbarianStatsCompleted, ref bool mageStatsCompleted, ref bool druidStatsCompleted, ref int characterStatsTries)
+    {
+        statsCompleted = false;
+        archerStatsCompleted = false;
+        barbarianStatsCompleted = false;
+        mageStatsCompleted = false;
+        druidStatsCompleted = false;
+        statIndexer = 0;
+        statsTries = 3;
+        characterStatsTries = 3;
+    }
 }

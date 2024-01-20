@@ -37,3 +37,14 @@ C:/Users/tboi5/Desktop/M3UF2PT1/M03UF2PR1/M03UF2PR1/GameModules/obj/Debug/net7.0
 /Users/sandro/Desktop/ITB/M3/UF2/M03UF2PR1/M03UF2PR1/GameModules/obj/Debug/net7.0/refint/GameModules.dll
 /Users/sandro/Desktop/ITB/M3/UF2/M03UF2PR1/M03UF2PR1/GameModules/obj/Debug/net7.0/GameModules.pdb
 /Users/sandro/Desktop/ITB/M3/UF2/M03UF2PR1/M03UF2PR1/GameModules/obj/Debug/net7.0/ref/GameModules.dll
+C:\Users\tboi5\Desktop\M3UF2PT1\M03UF2PR1\M03UF2PR1\GameModules\bin\Debug\net7.0\GameModules.deps.json
+C:\Users\tboi5\Desktop\M3UF2PT1\M03UF2PR1\M03UF2PR1\GameModules\bin\Debug\net7.0\GameModules.dll
+C:\Users\tboi5\Desktop\M3UF2PT1\M03UF2PR1\M03UF2PR1\GameModules\bin\Debug\net7.0\GameModules.pdb
+C:\Users\tboi5\Desktop\M3UF2PT1\M03UF2PR1\M03UF2PR1\GameModules\obj\Debug\net7.0\GameModules.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\tboi5\Desktop\M3UF2PT1\M03UF2PR1\M03UF2PR1\GameModules\obj\Debug\net7.0\GameModules.AssemblyInfoInputs.cache
+C:\Users\tboi5\Desktop\M3UF2PT1\M03UF2PR1\M03UF2PR1\GameModules\obj\Debug\net7.0\GameModules.AssemblyInfo.cs
+C:\Users\tboi5\Desktop\M3UF2PT1\M03UF2PR1\M03UF2PR1\GameModules\obj\Debug\net7.0\GameModules.csproj.CoreCompileInputs.cache
+C:\Users\tboi5\Desktop\M3UF2PT1\M03UF2PR1\M03UF2PR1\GameModules\obj\Debug\net7.0\GameModules.dll
+C:\Users\tboi5\Desktop\M3UF2PT1\M03UF2PR1\M03UF2PR1\GameModules\obj\Debug\net7.0\refint\GameModules.dll
+C:\Users\tboi5\Desktop\M3UF2PT1\M03UF2PR1\M03UF2PR1\GameModules\obj\Debug\net7.0\GameModules.pdb
+C:\Users\tboi5\Desktop\M3UF2PT1\M03UF2PR1\M03UF2PR1\GameModules\obj\Debug\net7.0\ref\GameModules.dll
