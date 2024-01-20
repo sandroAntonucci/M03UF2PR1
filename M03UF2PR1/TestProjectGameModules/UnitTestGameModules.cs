@@ -123,7 +123,7 @@ namespace TestProjectGameModules
         }
     }
 
-    
+    /*
     [TestClass]
     public class UnitTestAssignAttributes
     {
@@ -185,5 +185,27 @@ namespace TestProjectGameModules
 
         }
 
+    }
+    */
+
+    [TestClass]
+    public class UnitTestCopyStatsFromBase
+    {
+
+        [TestMethod]
+        public void CopyStatsFromBase_PositiveAttributes()
+        {
+
+            //Arrange
+            double[,] matrix = { { 1500, 200, 25 }, { 3000, 150, 35 }, { 1100, 300, 20 }, { 2000, 70, 25 }, { 7000, 300, 20 } };
+            double[] expectedArray = { 3000, 150, 35 };
+
+            //Act
+            double[] resultArray = Modules.CopyArrayFromMatrix(matrix, 1);
+
+            //Assert
+            Assert.AreEqual(resultArray, expectedArray);
+
+        }
     }
 }

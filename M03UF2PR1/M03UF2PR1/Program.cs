@@ -11,12 +11,7 @@ namespace GameProject
         static void Main()
         {
 
-            const int Zero = 0, One = 1, Two = 2, Three = 3, Four = 4,Percent = 100, Five = 5;
-            const int ArcherMinRangeHP = 1500, ArcherMaxRangeHP = 2000, ArcherMinRangeDMG = 180, ArcherMaxRangeDMG = 300, ArcherMinRangeReduct = 25, ArcherMaxRangeReduct = 40;
-            const int BarbarianMinRangeHP = 3000, BarbarianMaxRangeHP = 3750, BarbarianMinRangeDMG = 150, BarbarianMaxRangeDMG = 250, BarbarianMinRangeReduct = 35, BarbarianMaxRangeReduct = 45;
-            const int MageMinRangeHP = 1000, MageMaxRangeHP = 1500, MageMinRangeDMG = 300, MageMaxRangeDMG = 350, MageMinRangeReduct = 20, MageMaxRangeReduct = 35;
-            const int DruidMinRangeHP = 2000, DruidMaxRangeHP = 2500, DruidMinRangeDMG = 70, DruidMaxRangeDMG = 120, DruidMinRangeReduct = 25, DruidMaxRangeReduct = 40, DruidHeal = 500;
-            const int MonsterMinRangeHP = 9000, MonsterMaxRangeHP = 12000, MonsterMinRangeDMG = 250, MonsterMaxRangeDMG = 400, MonsterMinRangeReduct = 20, MonsterMaxRangeReduct = 30;
+            const int Zero = 0, One = 1, Two = 2, Three = 3, Four = 4, Percent = 100, Five = 5;
 
             const string MsgAction = " · Introdueix la teva acció: ";
             const string MsgCharacterActions = "\n  1.- Atacar\n  2.- Protegir-se\n  3.- Habilitat especial\n\n";
@@ -33,7 +28,7 @@ namespace GameProject
             const string MsgCharStats = "\nOK! Començem amb la creació de personatges. ";
             const string MsgGameDifficulty = "\nOK! Començem amb el selector de dificultat";
             const string MsgDifficultySelector = " · Selecciona una dificultat: \n\n  1.- Fàcil: Agafa el valor més alt del rang d’atributs dels personatges, i el més baix del monstre automàticament.\n  2.- Difícil:  Agafa el valor més baix del rang d’atributs dels personatges, i el més alt del monstre automàticament\n  3.- Personalitzat: Introduiràs els atributs dels personatges manualment\n  4.- Random: S'assignaràn els valors aleatoriament\n\n";
-            
+
 
             const string MsgDecoration = "\n\n-----------------------------------------\n\n";
             const string MsgDecorationArcher = "\n\n--- Estadístiques d'arquera ---\n\n";
@@ -48,11 +43,12 @@ namespace GameProject
             const string MsgOutOfTriesDifficulty = "\nT'has equivocat 3 vegades escollint la dificultat, tornes al menú principal.";
 
             const string MsgArcherName = "Arquera";
-            const string MsgArcherHP = "\n - Introdueix la vida de l'arquera (entre 1500 i 2000): ";
-            const string MsgArcherDMG = "\n - Introdueix l'atac de l'arquera (entre 180 i 300): ";
-            const string MsgArcherReduct = "\n - Introdueix la reducció de dany de l'arquera (entre 25% i 40%): ";
-            const string MsgArcherSpecial = "\n - L'arquera activa la seva habilitat especial i el monstre no pot atacar durant dos torns.";
             const string MsgArcherDied = "\nL'arquera ha mort :(";
+
+            // Es guarden els missatges de les estadístiques de l'arquera
+            string[] msgArcherStats = { "\n - Introdueix la vida de l'arquera (entre 1500 i 2000): ",
+                                        "\n - Introdueix l'atac de l'arquera (entre 180 i 300): ",
+                                        "\n - Introdueix la reducció de dany de l'arquera (entre 25% i 40%): "};
 
             const string MsgBarbarianName = "Bàrbar";
             const string MsgBarbarianHP = "\n - Introdueix la vida del bàrbar (entre 3000 i 3750): ";
@@ -87,17 +83,30 @@ namespace GameProject
             const string MsgBattle = "Comença la batalla!";
             const string MsgTurn = "Torn ";
 
-            int startGame, menuTries, difficulty, difficultyTries = 3, statsTries = 3, namesTries = 3,characterTries = 3, turnTries = 3, actionChosen = 0, turn = 1;
+            int statIndexer = 0, startGame, menuTries, difficulty, difficultyTries = 3, statsTries = 3, namesTries = 3, characterTries = 3, turnTries = 3, actionChosen = 0, turn = 1;
 
-            double archerHP = 0, archerMaxHP = 0, archerDMG = 0, archerReduct = 0, currentArcherReduct = 0, archerSpecialCooldown = 0;
-            double barbarianHP = 0, barbarianMaxHP = 0, barbarianDMG = 0, barbarianReduct = 0, currentBarbarianReduct = 0, barbarianSpecialCooldown = 0, barbarianReductSpecialTurns = 0;
-            double mageHP = 0, mageMaxHP = 0, mageDMG = 0, mageReduct = 0, currentMageReduct = 0, mageSpecialCooldown = 0;
-            double druidHP = 0, druidMaxHP = 0, druidDMG = 0, druidReduct = 0, currentDruidReduct = 0, druidSpecialCooldown = 0;
-            double monsterHP = 0, monsterDMG = 0, monsterReduct = 0, monsterStun = 0;
+            // Aquesta part la podría fer constant amb el readonly però no sé si es pot utilitzar, al readme hi ha més informació sobre la organització de les matrius
+            double[,] minStats = { { 1500, 200, 25 }, { 3000, 150, 35 }, { 1100, 300, 20 }, { 2000, 70, 25 }, {7000, 300, 20} };
+            double[,] maxStats = { { 2000, 300, 35 }, { 3750, 250, 45 }, { 1500, 400, 35 }, { 2500, 120, 40 }, {10000, 400, 30} };
+
+            // Les estadístiques les divideixo en un array per a cada personatge i el monstre
+            double[] archerStats = new double[4];
+            double[] barbarianStats = new double[4];
+            double[] mageStats = new double[4];
+            double[] druidStats = new double[4];
+            double[] monsterStats = new double[4];
+
+            // Cooldown de les habilitats especials
+            double archerSpecialCooldown = 0;
+            double barbarianSpecialCooldown = 0, barbarianReductSpecialTurns = 0;
+            double mageSpecialCooldown = 0;
+            double druidSpecialCooldown = 0;
+
+            double monsterStun = 0;
 
             string archerName, barbarianName, mageName, druidName;
 
-            bool exitGame = false, archerCompleted = false, barbarianCompleted = false, mageCompleted = false, druidCompleted = false, monsterCompleted = false, turnEnded = false;
+            bool exitGame = false, characterStatsCompleted = true, turnEnded = false;
 
             while (!(exitGame))         //Joc interminable mentre el jugador no vulgui sortir.
             {
@@ -178,7 +187,7 @@ namespace GameProject
                         } while (!Modules.CheckAndAssignValidNames(Console.ReadLine(), ref archerName, ref barbarianName, ref mageName, ref druidName) && namesTries > Zero);
 
                         // Si l'usuari s'ha quedat sense intents i el nom d'algun personatge esta buit(en aquest cas l'arquera) significa que no ha introduit els noms correctament i torna al menú principal
-                        if(archerName == "")
+                        if (archerName == "")
                         {
                             Console.ForegroundColor = ConsoleColor.Red;
                             Console.WriteLine(MsgOutOfTriesNames);
@@ -212,9 +221,9 @@ namespace GameProject
                             difficulty = Convert.ToInt32(Console.ReadLine());
 
                             difficultyTries--;
-                        
+
                         } while (!(difficulty > Zero && difficulty <= Four || difficultyTries == Zero));
-                        
+
                         // Si l'usuari s'ha quedat sense intents i no ha introduït la dificultat correctament li informa i torna al menú principal
                         if (!(difficulty > Zero && difficulty <= Four))
                         {
@@ -233,42 +242,20 @@ namespace GameProject
 
                             // Dificultat fàcil - Agafa el valor més alt del rang d’atributs dels personatges, i el més baix del monstre automàticament.
                             case One:
-                                
-                                // Arquera
-                                Modules.AssignAttributes(ref archerHP, ref archerMaxHP, ref archerDMG, ref archerReduct, ArcherMaxRangeHP, ArcherMaxRangeDMG, ArcherMaxRangeReduct);
-
-                                // Bàrbar
-                                Modules.AssignAttributes(ref barbarianHP, ref barbarianMaxHP, ref barbarianDMG, ref barbarianReduct, BarbarianMaxRangeHP, BarbarianMaxRangeDMG, BarbarianMaxRangeReduct);
-
-                                // Mag
-                                Modules.AssignAttributes(ref mageHP, ref mageMaxHP, ref mageDMG, ref mageReduct, MageMaxRangeHP, MageMaxRangeDMG, MageMaxRangeReduct);
-
-                                // Druida
-                                Modules.AssignAttributes(ref druidHP, ref druidMaxHP, ref druidDMG, ref druidReduct, DruidMaxRangeHP, DruidMaxRangeDMG, DruidMaxRangeReduct);
-
-                                // Monstre
-                                Modules.AssignAttributes(ref monsterHP, ref monsterDMG, ref monsterReduct, MonsterMinRangeHP, MonsterMinRangeDMG, MonsterMinRangeReduct);
-
+                                archerStats = Modules.CopyStatsFromBase(maxStats, Zero);
+                                barbarianStats = Modules.CopyStatsFromBase(maxStats, One);
+                                mageStats = Modules.CopyStatsFromBase(maxStats, Two);
+                                druidStats = Modules.CopyStatsFromBase(maxStats, Three);
+                                monsterStats = Modules.CopyStatsFromBase(minStats, Four);
                                 break;
 
                             // Dificultad difícil - Agafa el valor més baix del rang d'atributs dels personatges, i el més alt del monstre automàticament.
                             case Two:
-
-                                // Arquera
-                                Modules.AssignAttributes(ref archerHP, ref archerMaxHP,ref archerDMG, ref archerReduct, ArcherMinRangeHP, ArcherMinRangeDMG, ArcherMinRangeReduct);
-
-                                // Bàrbar
-                                Modules.AssignAttributes(ref barbarianHP, ref barbarianMaxHP, ref barbarianDMG, ref archerReduct, BarbarianMinRangeHP, BarbarianMinRangeDMG, BarbarianMinRangeReduct);
-
-                                // Mag
-                                Modules.AssignAttributes(ref mageHP, ref mageMaxHP, ref mageDMG, ref mageReduct, MageMinRangeHP, MageMinRangeDMG, MageMinRangeReduct);
-
-                                // Druida
-                                Modules.AssignAttributes(ref druidHP, ref druidMaxHP, ref druidDMG, ref druidReduct, DruidMinRangeHP, DruidMinRangeDMG, DruidMinRangeReduct);
-
-                                // Monstre
-                                Modules.AssignAttributes(ref monsterHP, ref monsterDMG, ref monsterReduct, MonsterMaxRangeHP, MonsterMaxRangeDMG, MonsterMaxRangeReduct);
-
+                                archerStats = Modules.CopyStatsFromBase(minStats, Zero);
+                                barbarianStats = Modules.CopyStatsFromBase(minStats, One);
+                                mageStats = Modules.CopyStatsFromBase(minStats, Two);
+                                druidStats = Modules.CopyStatsFromBase(minStats, Three);
+                                monsterStats = Modules.CopyStatsFromBase(maxStats, Four);
                                 break;
 
 
@@ -276,68 +263,62 @@ namespace GameProject
                             // Dificultat personalitzada - L'usuari introdueix els valors manualment
                             case Three:
 
-
-                                // Arquera
-
-                                // Vida
-
-                                while (!Modules.CheckValidAttributes(archerHP, ArcherMinRangeHP, ArcherMaxRangeHP) && statsTries > Zero)
+                                while(!characterStatsCompleted && characterTries > Zero)
                                 {
-                                    Console.Write(MsgArcherHP);
-                                    archerHP = Convert.ToDouble(Console.ReadLine());
-                                    archerMaxHP = archerHP;
-
-                                    if (!Modules.CheckValidAttributes(archerHP, ArcherMinRangeHP, ArcherMaxRangeHP))
+                                    // Estadístiques d'arquera
+                                    while (statIndexer < 3 && statsTries > Zero)
                                     {
-                                        Console.WriteLine(MsgInputNotValid);
-                                        statsTries--;
+                                        Console.Write(msgArcherStats[statIndexer]);
+                                        archerStats[statIndexer + One] = Convert.ToDouble(Console.ReadLine());
+
+                                        if (!Modules.CheckValidAttributes(archerStats[statIndexer + One], minStats[Zero, statIndexer], maxStats[Zero, statIndexer]))
+                                        {
+                                            Console.WriteLine(MsgInputNotValid);
+                                            statsTries--;
+                                        }
+                                        else
+                                        {
+                                            if (statIndexer == Zero) archerStats[Zero] = archerStats[One];
+                                            if (statIndexer == Two) characterStatsCompleted = true;
+                                            statIndexer++;
+                                        }
                                     }
-                                };
 
-                                // Dany
-
-                                while (!Modules.CheckValidAttributes(archerDMG, ArcherMinRangeDMG, ArcherMaxRangeDMG) && statsTries > Zero)
-                                {
-                                    Console.Write(MsgArcherHP);
-                                    archerDMG = Convert.ToDouble(Console.ReadLine());
-
-                                    if (!Modules.CheckValidAttributes(archerDMG, ArcherMinRangeDMG, ArcherMaxRangeDMG))
+                                    // Estadístiques de bàrbar
+                                    while (statIndexer < 3 && statsTries > Zero)
                                     {
-                                        Console.WriteLine(MsgInputNotValid);
-                                        statsTries--;
+                                        Console.Write(msgArcherStats[statIndexer]);
+                                        archerStats[statIndexer + One] = Convert.ToDouble(Console.ReadLine());
+
+                                        if (!Modules.CheckValidAttributes(archerStats[statIndexer + One], minStats[Zero, statIndexer], maxStats[Zero, statIndexer]))
+                                        {
+                                            Console.WriteLine(MsgInputNotValid);
+                                            statsTries--;
+                                        }
+                                        else
+                                        {
+                                            if (statIndexer == Zero) archerStats[Zero] = archerStats[One];
+                                            statIndexer++;
+                                        }
                                     }
-                                };
-
-                                // Reducció de dany
-
-                                while (!Modules.CheckValidAttributes(archerReduct, ArcherMinRangeReduct, ArcherMaxRangeReduct) && statsTries > Zero)
-                                {
-                                    Console.Write(MsgArcherHP);
-                                    archerDMG = Convert.ToDouble(Console.ReadLine());
-
-                                    if (!Modules.CheckValidAttributes(archerDMG, ArcherMinRangeDMG, ArcherMaxRangeDMG))
-                                    {
-                                        Console.WriteLine(MsgInputNotValid);
-                                        statsTries--;
-                                    }
-                                };
-
-
-
-
-
-
-
+                                }
+                                
 
                                 break;
 
 
                             case Four:
-                              
+
                                 break;
 
                         }
 
+                        foreach (double s in archerStats) Console.WriteLine(s);
+
+                        break;
+
+
+                        /*
                         // Introducció de característiques
                         // Estadístiques Arquera
 
@@ -387,7 +368,7 @@ namespace GameProject
                                     statsTries--;
                                 }
                             }
-                              
+
                             // Reducció de dany arquera
                             while ((archerReduct < ArcherMinRangeReduct || archerReduct > ArcherMaxRangeReduct) && statsTries > Zero)
                             {
@@ -1176,9 +1157,9 @@ namespace GameProject
                         }
 
                         break;
-
-                }
+*/
+                }    
             }
-        }
-    }
+        }               
+    }                   
 }
