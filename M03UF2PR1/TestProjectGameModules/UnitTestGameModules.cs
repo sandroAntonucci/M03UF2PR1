@@ -123,89 +123,99 @@ namespace TestProjectGameModules
         }
     }
 
-    /*
+    
     [TestClass]
-    public class UnitTestAssignAttributes
+    public class UnitTestAssignStats
     {
 
         [TestMethod]
-        public void AssignAttributes_PositiveAttributes()
-        {
-
-            //Arrange
-            const int HP = 100, DMG = 40, Reduct = 30;
-            double actualHP = 20, actualMaxHP = 20, actualDMG = 40, actualReduct = 60;
-
-            //Act
-            Modules.AssignAttributes(ref actualHP, ref actualMaxHP, ref actualDMG, ref actualReduct, HP, DMG, Reduct);
-
-            //Assert
-            Assert.AreEqual(actualHP, HP);
-            Assert.AreEqual(actualMaxHP, HP);
-            Assert.AreEqual(actualDMG, DMG);
-            Assert.AreEqual(actualReduct, Reduct);
-
-        }
-
-        [TestMethod]
-        public void AssignAttributes_NegativeAttributes()
-        {
-
-            //Arrange
-            const int HP = -100, DMG = -40, Reduct = -30;
-            double actualHP = 0, actualMaxHP = 0, actualDMG = 0, actualReduct = 0;
-
-            //Act
-            Modules.AssignAttributes(ref actualHP, ref actualMaxHP, ref actualDMG, ref actualReduct, HP, DMG, Reduct);
-
-            //Assert
-            Assert.AreEqual(actualHP, HP);
-            Assert.AreEqual(actualMaxHP, HP);
-            Assert.AreEqual(actualDMG, DMG);
-            Assert.AreEqual(actualReduct, Reduct);
-
-        }
-
-        [TestMethod]
-        public void AssignAttributes_AttributesEqualToZero()
-        {
-
-            //Arrange
-            const int HP = 20, DMG = 40, Reduct = 60;
-            double actualHP = 0, actualMaxHP = 0, actualDMG = 0, actualReduct = 0;
-
-            //Act
-            Modules.AssignAttributes(ref actualHP, ref actualMaxHP, ref actualDMG, ref actualReduct, HP, DMG, Reduct);
-
-            //Assert
-            Assert.AreEqual(actualHP, HP);
-            Assert.AreEqual(actualMaxHP, HP);
-            Assert.AreEqual(actualDMG, DMG);
-            Assert.AreEqual(actualReduct, Reduct);
-
-        }
-
-    }
-    */
-
-    [TestClass]
-    public class UnitTestCopyStatsFromBase
-    {
-
-        [TestMethod]
-        public void CopyStatsFromBase_PositiveAttributes()
+        public void AssignStats_PositiveAttributes()
         {
 
             //Arrange
             double[,] matrix = { { 1500, 200, 25 }, { 3000, 150, 35 }, { 1100, 300, 20 }, { 2000, 70, 25 }, { 7000, 300, 20 } };
-            double[] expectedArray = { 3000, 150, 35 };
+            double[] expectedArray = { 3000, 3000, 150, 35 };
 
             //Act
-            double[] resultArray = Modules.CopyArrayFromMatrix(matrix, 1);
+            double[] resultArray = Modules.AssignStats(matrix, 1);
 
             //Assert
-            Assert.AreEqual(resultArray, expectedArray);
+            
+            for(int i = 0; i < expectedArray.Length; i++)
+            {
+                Assert.AreEqual(expectedArray[i], resultArray[i]);
+            }
+
+        }
+
+    }
+
+    [TestClass]
+    public class UnitTestCheckValidAttributes
+    {
+
+        [TestMethod]
+        public void CheckValidAttributes_PositiveStatBetweenRange()
+        {
+
+            //Arrange
+            const double attributeValue = 20, minValue = 5, maxValue = 40;
+
+            //Act
+            bool result = Modules.CheckValidAttributes(attributeValue, minValue, maxValue);
+
+            //Assert
+            Assert.IsTrue(result);
+
+        }
+
+        [TestMethod]
+        public void CheckValidAttributes_PositiveStatNotBetweenRange()
+        {
+
+            //Arrange
+            const double attributeValue = 41, minValue = 5, maxValue = 40;
+
+
+            //Act
+            bool result = Modules.CheckValidAttributes(attributeValue, minValue, maxValue);
+
+            //Assert
+            Assert.IsFalse(result);
+
+        }
+
+        [TestMethod]
+        public void CheckValidAttributes_InferiorLimit_BetweenRange()
+        {
+
+            //Arrange
+            const double attributeValue = 5, minValue = 5, maxValue = 40;
+
+
+            //Act
+            bool result = Modules.CheckValidAttributes(attributeValue, minValue, maxValue);
+
+            //Assert
+            Assert.IsTrue(result);
+
+        }
+
+        [TestMethod]
+        public void CheckValidAttributes_SuperiorLimit_BetweenRange()
+        {
+
+            //Arrange
+            const double attributeValue = 40, minValue = 5, maxValue = 40;
+
+
+            //Act
+            bool result = Modules.CheckValidAttributes(attributeValue, minValue, maxValue);
+
+            //Assert
+            Assert.IsTrue(result);
 
         }
     }
+
 }

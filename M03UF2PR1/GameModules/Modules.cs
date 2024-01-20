@@ -30,8 +30,8 @@ public class Modules
         return true;
     }
 
-    // Retorna la copia d'un array dins d'una matriu
-    public static double[] CopyStatsFromBase(double[,] matrix, int arrayPosition)
+    // Retorna la copia d'un array dins d'una matriu (s'utilitza per assignar estadístiques)
+    public static double[] AssignStats(double[,] matrix, int arrayPosition)
     {
         double[] copiedArray = new double[matrix.GetLength(1) + 1];
 

@@ -247,20 +247,20 @@ namespace GameProject
 
                             // Dificultat fàcil - Agafa el valor més alt del rang d’atributs dels personatges, i el més baix del monstre automàticament.
                             case One:
-                                archerStats = Modules.CopyStatsFromBase(maxStats, Zero);
-                                barbarianStats = Modules.CopyStatsFromBase(maxStats, One);
-                                mageStats = Modules.CopyStatsFromBase(maxStats, Two);
-                                druidStats = Modules.CopyStatsFromBase(maxStats, Three);
-                                monsterStats = Modules.CopyStatsFromBase(minStats, Four);
+                                archerStats = Modules.AssignStats(maxStats, Zero);
+                                barbarianStats = Modules.AssignStats(maxStats, One);
+                                mageStats = Modules.AssignStats(maxStats, Two);
+                                druidStats = Modules.AssignStats(maxStats, Three);
+                                monsterStats = Modules.AssignStats(minStats, Four);
                                 break;
 
                             // Dificultad difícil - Agafa el valor més baix del rang d'atributs dels personatges, i el més alt del monstre automàticament.
                             case Two:
-                                archerStats = Modules.CopyStatsFromBase(minStats, Zero);
-                                barbarianStats = Modules.CopyStatsFromBase(minStats, One);
-                                mageStats = Modules.CopyStatsFromBase(minStats, Two);
-                                druidStats = Modules.CopyStatsFromBase(minStats, Three);
-                                monsterStats = Modules.CopyStatsFromBase(maxStats, Four);
+                                archerStats = Modules.AssignStats(minStats, Zero);
+                                barbarianStats = Modules.AssignStats(minStats, One);
+                                mageStats = Modules.AssignStats(minStats, Two);
+                                druidStats = Modules.AssignStats(minStats, Three);
+                                monsterStats = Modules.AssignStats(maxStats, Four);
                                 break;
 
 
