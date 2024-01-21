@@ -1,4 +1,5 @@
 ﻿using System.Data;
+using System.Net.NetworkInformation;
 
 namespace GameModules;
 
@@ -30,6 +31,13 @@ public class Modules
         return true;
     }
 
+    // Guarda els noms a un array
+    public static string[] SaveNames(string archerName, string barbarianName, string mageName, string druidName)
+    {
+        string[] names = {archerName, barbarianName, mageName, druidName};
+        return names;
+    }
+
     // Retorna la copia d'un array dins d'una matriu (s'utilitza per assignar estadístiques)
     public static double[] AssignStats(double[,] matrix, int arrayPosition)
     {
@@ -47,6 +55,25 @@ public class Modules
 
         return copiedArray;
     }
+
+    // Retorna un array de valors entre un mínim i un máxim (s'utilitza per assignar estadístiques a la dificultat random)
+    public static double[] AssignStats(double[,] minStats, double[,] maxStats, int arrayPosition)
+    {
+
+        double[] stats = new double[4];
+
+        // Genera valors aleatoris entre els estats mínims i máxims a partir de la segona posició de l'array
+        for(int i = 0; i < minStats.GetLength(1); i++)
+        {
+            stats[i + 1] = GenerateRandom(Convert.ToInt32(minStats[arrayPosition, i]), Convert.ToInt32(maxStats[arrayPosition, i]));
+        }
+
+        // Copia la segona posició de l'array a la primera per a maxHP
+        stats[0] = stats[1];
+
+        return stats;
+    }
+    
 
     // Comprova que els atributs estiguin dins del rang
     public static bool CheckValidAttributes(double attributeValue, double minAttributeValue, double maxAttributeValue)
@@ -74,4 +101,27 @@ public class Modules
         statsTries = 3;
         characterStatsTries = 3;
     }
+
+    // Genera un valor aleatori entre mínim i màxim
+    public static double GenerateRandom(int minValue, int maxValue)
+    {
+        Random rand = new Random();
+
+        return Convert.ToDouble(rand.Next(minValue, maxValue + 1));
+    }
+
+    public static void PrintStats(string characterName, string character, double[] characterStats)
+    {
+        const string MsgStats = "\n\n--- Estadístiques {0} ({1}) ---\n\n Vida: {2} // Dany: {3} // Reducció de dany: {4}";
+        const string MsgContinue = "\nPrem una tecla per continuar...";
+
+        Console.Clear();
+        Console.ForegroundColor = ConsoleColor.Yellow;
+        Console.WriteLine(MsgStats, characterName, character, characterStats[1], characterStats[2], characterStats[3]);
+        Console.ForegroundColor= ConsoleColor.Green;
+        Console.WriteLine(MsgContinue);
+        Console.ReadKey();
+
+    }
+
 }
