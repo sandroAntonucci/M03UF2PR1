@@ -218,4 +218,47 @@ namespace TestProjectGameModules
         }
     }
 
+    [TestClass]
+    public class UnitTestGenerateRandom
+    {
+
+        [TestMethod]
+        public void GenerateRandom_PositiveInput()
+        {
+
+            //Arrange
+            const double min = 10, max = 100;
+
+            //Act
+            double result = Modules.GenerateRandom(Convert.ToInt32(min), Convert.ToInt32(max));
+
+            //Assert
+
+            Assert.IsTrue(result >= min && result <= max);
+
+        }
+
+    }
+
+    [TestClass]
+    public class UnitTestSaveNames
+    {
+
+        [TestMethod]
+        public void SaveNames_ValidNames()
+        {
+
+            //Arrange
+            const string ArcherName = "a", BarbarianName = "b", MageName = "c", DruidName = "d";
+            string[] ExpectedNames = { "a", "b", "c", "d" };
+
+            //Act
+            string[] resultNames = Modules.SaveNames(ArcherName, BarbarianName, MageName, DruidName);
+
+            //Assert
+
+            Assert.AreEqual(resultNames, ExpectedNames);
+        }
+    }
+
 }

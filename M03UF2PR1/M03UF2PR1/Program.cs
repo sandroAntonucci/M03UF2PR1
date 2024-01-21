@@ -29,7 +29,7 @@ namespace GameProject
             const string MsgGameDifficulty = "\nOK! Començem amb el selector de dificultat";
             const string MsgDifficultySelector = " · Selecciona una dificultat: \n\n  1.- Fàcil: Agafa el valor més alt del rang d’atributs dels personatges, i el més baix del monstre automàticament.\n  2.- Difícil:  Agafa el valor més baix del rang d’atributs dels personatges, i el més alt del monstre automàticament\n  3.- Personalitzat: Introduiràs els atributs dels personatges manualment\n  4.- Random: S'assignaràn els valors aleatoriament\n\n";
 
-
+            const string MsgFinalStats = "\n\n --- Estadístiques Finals --- \n\n";
             const string MsgDecoration = "\n\n-----------------------------------------\n\n";
             const string MsgDecorationArcher = "\n\n--- Estadístiques d'arquera ---\n\n";
             const string MsgDecorationBarbarian = "\n\n--- Estadístiques de bàrbar ---\n\n";
@@ -201,8 +201,10 @@ namespace GameProject
 
                         namesTries = Three;
 
-                        // Selector de dificultat
+                        // Es guarden els noms a un array
+                        string[] characterNames = Modules.SaveNames(archerName, barbarianName, mageName, druidName);
 
+                        // Selector de dificultat
                         Console.WriteLine(MsgGameDifficulty);
                         Console.ReadKey();
                         Console.Clear();
@@ -280,7 +282,7 @@ namespace GameProject
                                         Console.Write(MsgDecorationArcher);
 
                                         // Estadístiques d'arquera
-                                        while (statIndexer < 3 && statsTries > Zero)
+                                        while (statIndexer < Three && statsTries > Zero)
                                         {
                                             Console.ForegroundColor = ConsoleColor.Yellow;
 
@@ -317,7 +319,7 @@ namespace GameProject
 
 
                                         // Estadístiques de bàrbar
-                                        while (statIndexer < 3 && statsTries > Zero)
+                                        while (statIndexer < Three && statsTries > Zero)
                                         {
                                             Console.ForegroundColor = ConsoleColor.Yellow;
 
@@ -351,7 +353,7 @@ namespace GameProject
                                         Console.Write(MsgDecorationMage);
 
                                         // Estadístiques del mag
-                                        while (statIndexer < 3 && statsTries > Zero)
+                                        while (statIndexer < Three && statsTries > Zero)
                                         {
                                             Console.ForegroundColor = ConsoleColor.Yellow;
                                             
@@ -384,7 +386,7 @@ namespace GameProject
                                         Console.Write(MsgDecorationDruid);
 
                                         // Estadístiques del druida
-                                        while (statIndexer < 3 && statsTries > Zero)
+                                        while (statIndexer < Three && statsTries > Zero)
                                         {
                                             Console.ForegroundColor = ConsoleColor.Yellow;
                                             Console.Write(msgDruidStats[statIndexer]);
@@ -416,7 +418,7 @@ namespace GameProject
                                         Console.Write(MsgDecorationMonster);
 
                                         // Estadístiques del monstre
-                                        while (statIndexer < 3 && statsTries > Zero)
+                                        while (statIndexer < Three && statsTries > Zero)
                                         {
                                             Console.ForegroundColor = ConsoleColor.Yellow;
                                             Console.Write(msgMonsterStats[statIndexer]);
@@ -450,16 +452,30 @@ namespace GameProject
                                 }
                                 break;
 
+                            // Dificultat Randomitzada
                             case Four:
 
+                                archerStats = Modules.AssignStats(minStats, maxStats, Zero);
+                                barbarianStats = Modules.AssignStats(minStats, maxStats, One);
+                                mageStats = Modules.AssignStats(minStats, maxStats, Two);
+                                druidStats = Modules.AssignStats(minStats, maxStats, Three);
+                                monsterStats = Modules.AssignStats(minStats, maxStats, Four);
                                 break;
 
                         }
 
-                        foreach (double s in archerStats) Console.WriteLine(s);
-                        foreach (double s in barbarianStats) Console.WriteLine(s);
-                        foreach (double s in mageStats) Console.WriteLine(s);
-                        foreach (double s in druidStats) Console.WriteLine(s);
+                        // Si no es completen les estadístiques correctament el joc torna al menú principal
+                        if (!characterStatsCompleted) break;
+
+                        // Es retornen les estadístiques
+                        Modules.PrintStats(archerName, MsgArcherName, archerStats);
+                        Modules.PrintStats(barbarianName, MsgBarbarianName,barbarianStats);
+                        Modules.PrintStats(mageName, MsgMageName,mageStats);
+                        Modules.PrintStats(druidName, MsgDruidName,druidStats);
+                        Modules.PrintStats(MsgMonsterName, MsgMonsterName, monsterStats);
+
+                        Console.Clear();
+
 
                         break;
 
