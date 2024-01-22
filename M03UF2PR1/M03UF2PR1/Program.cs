@@ -28,6 +28,7 @@ namespace GameProject
             const string MsgCharStats = "\nOK! Començem amb la creació de personatges. ";
             const string MsgGameDifficulty = "\nOK! Començem amb el selector de dificultat";
             const string MsgDifficultySelector = " · Selecciona una dificultat: \n\n  1.- Fàcil: Agafa el valor més alt del rang d’atributs dels personatges, i el més baix del monstre automàticament.\n  2.- Difícil:  Agafa el valor més baix del rang d’atributs dels personatges, i el més alt del monstre automàticament\n  3.- Personalitzat: Introduiràs els atributs dels personatges manualment\n  4.- Random: S'assignaràn els valors aleatoriament\n\n";
+            const string MsgOutOfTriesStats = "Has assignat l'estadística malament tres vegades, s'assigna el valor mínim";
 
             const string MsgFinalStats = "\n\n --- Estadístiques Finals --- \n\n";
             const string MsgDecoration = "\n\n-----------------------------------------\n\n";
@@ -37,7 +38,7 @@ namespace GameProject
             const string MsgDecorationDruid = "\n\n--- Estadístiques de druida ---\n\n";
             const string MsgDecorationMonster = "\n\n--- Estadístiques de monstre ---\n\n";
 
-            const string MsgOutOfTriesStats = "\nT'has equivocat 3 vegades, torna a introduïr els atributs.";
+
             const string MsgOutOfTriesCharacters = "\nT'has equivocat 3 vegades donant atributs als personatges, tornes al menú principal.";
             const string MsgOutOfTriesNames = "\nT'has equivocat 3 vegades donant noms als personatges, tornes al menú principal.";
             const string MsgOutOfTriesDifficulty = "\nT'has equivocat 3 vegades escollint la dificultat, tornes al menú principal.";
@@ -53,7 +54,7 @@ namespace GameProject
             const string MsgMageName = "Maga";
             const string MsgMageSpecial = "\n - La maga activa la seva habilitat especial i dispara una bola de foc que fa 3 cops el seu atac.";
             const string MsgMageDied = "El mag ha mort :(";
-            
+
             const string MsgDruidName = "Druida";
             const string MsgDruidSpecial = "\n - El druida activa la seva habilitat especial i cura a tothom 500 de vida.";
             const string MsgDruidDied = "El druida ha mort :(";
@@ -68,8 +69,8 @@ namespace GameProject
             int statIndexer = 0, startGame, menuTries, difficulty, difficultyTries = 3, statsTries = 3, namesTries = 3, characterTries = 3, turnTries = 3, actionChosen = 0, turn = 1;
 
             // Aquesta part la podría fer constant amb el readonly però no sé si es pot utilitzar, al readme hi ha més informació sobre la organització de les matrius
-            double[,] minStats = { { 1500, 200, 25 }, { 3000, 150, 35 }, { 1100, 300, 20 }, { 2000, 70, 25 }, {7000, 300, 20} };
-            double[,] maxStats = { { 2000, 300, 35 }, { 3750, 250, 45 }, { 1500, 400, 35 }, { 2500, 120, 40 }, {10000, 400, 30} };
+            double[,] minStats = { { 1500, 200, 25 }, { 3000, 150, 35 }, { 1100, 300, 20 }, { 2000, 70, 25 }, { 7000, 300, 20 } };
+            double[,] maxStats = { { 2000, 300, 35 }, { 3750, 250, 45 }, { 1500, 400, 35 }, { 2500, 120, 40 }, { 10000, 400, 30 } };
 
             // Les estadístiques les divideixo en un array per a cada personatge i el monstre
             double[] archerStats = new double[4];
@@ -82,15 +83,15 @@ namespace GameProject
             string[] msgArcherStats = { "\n - Introdueix la vida de l'arquera (entre 1500 i 2000): ",
                                         "\n - Introdueix l'atac de l'arquera (entre 200 i 300): ",
                                         "\n - Introdueix la reducció de dany de l'arquera (entre 25% i 35%): "};
-            
+
             string[] msgBarbarianStats = {  "\n - Introdueix la vida del bàrbar (entre 3000 i 3750): ",
                                             "\n - Introdueix l'atac del bàrbar (entre 150 i 250): ",
                                             "\n - Introdueix la reducció de dany del bàrbar (entre 35% i 45%): "};
-            
+
             string[] msgMageStats = {   "\n - Introdueix la vida del mag (entre 1100 i 1500): ",
                                         "\n - Introdueix l'atac del mag (entre 300 i 350): ",
                                         "\n - Introdueix la reducció de dany del mag (entre 20% i 35%): "};
-            
+
             string[] msgDruidStats = {  "\n - Introdueix la vida del druida (entre 2000 i 2500): ",
                                         "\n - Introdueix l'atac del druida (entre 70 i 120): ",
                                         "\n - Introdueix la reducció de dany del druida (entre 25% i 40%): "};
@@ -109,7 +110,7 @@ namespace GameProject
 
             string archerName, barbarianName, mageName, druidName;
 
-            bool exitGame = false, characterStatsCompleted = false, archerStatsCompleted = false, barbarianStatsCompleted = false, mageStatsCompleted = false, druidStatsCompleted = false, monsterStatsCompleted = false, turnEnded = false;
+            bool exitGame = false, characterStatsCompleted = false, archerStatsCompleted = false, barbarianStatsCompleted = false, mageStatsCompleted = false, druidStatsCompleted = false, monsterStatsCompleted = false, turnEnded = false, battleEnded = false;
 
             while (!(exitGame))         //Joc interminable mentre el jugador no vulgui sortir.
             {
@@ -254,6 +255,7 @@ namespace GameProject
                                 mageStats = Modules.AssignStats(maxStats, Two);
                                 druidStats = Modules.AssignStats(maxStats, Three);
                                 monsterStats = Modules.AssignStats(minStats, Four);
+                                characterStatsCompleted = true;
                                 break;
 
                             // Dificultad difícil - Agafa el valor més baix del rang d'atributs dels personatges, i el més alt del monstre automàticament.
@@ -263,6 +265,7 @@ namespace GameProject
                                 mageStats = Modules.AssignStats(minStats, Two);
                                 druidStats = Modules.AssignStats(minStats, Three);
                                 monsterStats = Modules.AssignStats(maxStats, Four);
+                                characterStatsCompleted = true;
                                 break;
 
 
@@ -272,185 +275,227 @@ namespace GameProject
 
                                 Console.ForegroundColor = ConsoleColor.Yellow;
 
-                                Modules.ResetStatsCheckers(ref characterStatsCompleted, ref statIndexer, ref statsTries, ref archerStatsCompleted, ref barbarianStatsCompleted, ref mageStatsCompleted, ref druidStatsCompleted, ref characterTries);
+                                Modules.ResetStatsCheckers(ref statIndexer, ref statsTries);
 
-                                while (!characterStatsCompleted && characterTries > Zero)
+                                Console.Write(MsgDecorationArcher);
+
+                                // Estadístiques d'arquera
+                                while (statIndexer < Three)
                                 {
-
-                                    if (!archerStatsCompleted)
-                                    {
-                                        Console.Write(MsgDecorationArcher);
-
-                                        // Estadístiques d'arquera
-                                        while (statIndexer < Three && statsTries > Zero)
-                                        {
-                                            Console.ForegroundColor = ConsoleColor.Yellow;
-
-                                            // Llegeix l'estadística que indica statIndexer
-                                            Console.Write(msgArcherStats[statIndexer]);
-                                            Console.ForegroundColor = ConsoleColor.Green;
-                                            archerStats[statIndexer + One] = Convert.ToDouble(Console.ReadLine());
-
-                                            // Si l'estadística no està dins del rang, retorna error i es resta un intent
-                                            if (!Modules.CheckValidAttributes(archerStats[statIndexer + One], minStats[Zero, statIndexer], maxStats[Zero, statIndexer]))
-                                            {
-                                                Console.ForegroundColor = ConsoleColor.Red;
-                                                Console.WriteLine(MsgInputNotValid);
-                                                statsTries--;
-                                            }
-                                            // Si l'estadística està dins del rang, es comprova que sigui vida per a fer maxHP i que sigui l'última característica per a donar per completat el personatge
-                                            else
-                                            {
-                                                if (statIndexer == Zero) archerStats[Zero] = archerStats[One];
-                                                if (statIndexer == Two) archerStatsCompleted = true;
-                                                statIndexer++;
-                                            }
-                                        }
-                                    }
-
-                                    Console.Clear();
                                     Console.ForegroundColor = ConsoleColor.Yellow;
 
-                                    if (!barbarianStatsCompleted && archerStatsCompleted)
+                                    // Llegeix l'estadística que indica statIndexer
+                                    Console.Write(msgArcherStats[statIndexer]);
+                                    Console.ForegroundColor = ConsoleColor.Green;
+                                    archerStats[statIndexer + One] = Convert.ToDouble(Console.ReadLine());
+
+                                    // Si l'estadística no està dins del rang, retorna error i es resta un intent
+                                    if (!Modules.CheckValidAttributes(archerStats[statIndexer + One], minStats[Zero, statIndexer], maxStats[Zero, statIndexer]))
                                     {
+                                        Console.ForegroundColor = ConsoleColor.Red;
+                                        Console.WriteLine(MsgInputNotValid);
+                                        statsTries--;
 
-                                        Modules.ResetStatsCheckers(ref characterStatsCompleted, ref statIndexer, ref statsTries);
-                                        Console.Write(MsgDecorationBarbarian);
-
-
-                                        // Estadístiques de bàrbar
-                                        while (statIndexer < Three && statsTries > Zero)
+                                        // Si l'usuari s'ha equivocat tres vegades assignant un atribut, s'assigna el valor mínim
+                                        if (statsTries == Zero)
                                         {
-                                            Console.ForegroundColor = ConsoleColor.Yellow;
+                                            Console.WriteLine(MsgOutOfTriesStats);
+                                            archerStats[statIndexer + One] = minStats[Zero, statIndexer];
 
-                                            Console.Write(msgBarbarianStats[statIndexer]);
-                                            Console.ForegroundColor = ConsoleColor.Green;
-                                            barbarianStats[statIndexer + One] = Convert.ToDouble(Console.ReadLine());
+                                            if (statIndexer == Zero) archerStats[Zero] = archerStats[One];
 
-                                            if (!Modules.CheckValidAttributes(barbarianStats[statIndexer + One], minStats[One, statIndexer], maxStats[One, statIndexer]))
-                                            {
-                                                Console.ForegroundColor = ConsoleColor.Red;
-                                                Console.WriteLine(MsgInputNotValid);
-                                                statsTries--;
-                                            }
-                                            else
-                                            {
-                                                if (statIndexer == Zero) barbarianStats[Zero] = barbarianStats[One];
-                                                if (statIndexer == Two) barbarianStatsCompleted = true;
-                                                statIndexer++;
-                                            }
+                                            statIndexer++;
+                                            statsTries = Three;
                                         }
                                     }
-
-                                    Console.Clear();
-                                    Console.ForegroundColor = ConsoleColor.Yellow;
-
-                                    // Només es comencen les estadístiques del mag si s'ha completat el bàrbar
-                                    if (!mageStatsCompleted && barbarianStatsCompleted)
-                                    {
-
-                                        Modules.ResetStatsCheckers(ref characterStatsCompleted, ref statIndexer, ref statsTries);
-                                        Console.Write(MsgDecorationMage);
-
-                                        // Estadístiques del mag
-                                        while (statIndexer < Three && statsTries > Zero)
-                                        {
-                                            Console.ForegroundColor = ConsoleColor.Yellow;
-                                            
-                                            Console.Write(msgMageStats[statIndexer]);
-                                            Console.ForegroundColor = ConsoleColor.Green;
-                                            mageStats[statIndexer + One] = Convert.ToDouble(Console.ReadLine());
-
-                                            if (!Modules.CheckValidAttributes(mageStats[statIndexer + One], minStats[Two, statIndexer], maxStats[Two, statIndexer]))
-                                            {
-                                                Console.ForegroundColor = ConsoleColor.Red;
-                                                Console.WriteLine(MsgInputNotValid);
-                                                statsTries--;
-                                            }
-                                            else
-                                            {
-                                                if (statIndexer == Zero) mageStats[Zero] = mageStats[One];
-                                                if (statIndexer == Two) mageStatsCompleted = true;
-                                                statIndexer++;
-                                            }
-                                        }
-                                    }
-
-                                    Console.Clear();
-                                    Console.ForegroundColor = ConsoleColor.Yellow;
-
-                                    if (!druidStatsCompleted && mageStatsCompleted)
-                                    {
-
-                                        Modules.ResetStatsCheckers(ref characterStatsCompleted, ref statIndexer, ref statsTries);
-                                        Console.Write(MsgDecorationDruid);
-
-                                        // Estadístiques del druida
-                                        while (statIndexer < Three && statsTries > Zero)
-                                        {
-                                            Console.ForegroundColor = ConsoleColor.Yellow;
-                                            Console.Write(msgDruidStats[statIndexer]);
-                                            Console.ForegroundColor = ConsoleColor.Green;
-                                            druidStats[statIndexer + One] = Convert.ToDouble(Console.ReadLine());
-
-                                            if (!Modules.CheckValidAttributes(druidStats[statIndexer + One], minStats[Three, statIndexer], maxStats[Three, statIndexer]))
-                                            {
-                                                Console.ForegroundColor = ConsoleColor.Red;
-                                                Console.WriteLine(MsgInputNotValid);
-                                                statsTries--;
-                                            }
-                                            else
-                                            {
-                                                if (statIndexer == Zero) druidStats[Zero] = druidStats[One];
-                                                if (statIndexer == Two) druidStatsCompleted = true;
-                                                statIndexer++;
-                                            }
-                                        }
-                                    }
-
-                                    Console.Clear();
-                                    Console.ForegroundColor = ConsoleColor.Yellow;
-
-                                    if (!monsterStatsCompleted && druidStatsCompleted)
-                                    {
-
-                                        Modules.ResetStatsCheckers(ref characterStatsCompleted, ref statIndexer, ref statsTries);
-                                        Console.Write(MsgDecorationMonster);
-
-                                        // Estadístiques del monstre
-                                        while (statIndexer < Three && statsTries > Zero)
-                                        {
-                                            Console.ForegroundColor = ConsoleColor.Yellow;
-                                            Console.Write(msgMonsterStats[statIndexer]);
-                                            Console.ForegroundColor = ConsoleColor.Green;
-                                            monsterStats[statIndexer + One] = Convert.ToDouble(Console.ReadLine());
-
-                                            if (!Modules.CheckValidAttributes(monsterStats[statIndexer + One], minStats[Four, statIndexer], maxStats[Four, statIndexer]))
-                                            {
-                                                Console.ForegroundColor = ConsoleColor.Red;
-                                                Console.WriteLine(MsgInputNotValid);
-                                                statsTries--;
-                                            }
-                                            else
-                                            {
-                                                if (statIndexer == Zero) monsterStats[Zero] = monsterStats[One];
-                                                if (statIndexer == Two) characterStatsCompleted = true;
-                                                statIndexer++;
-                                            }
-                                        }
-                                    }
-
-                                    // Es resta un intent a les estadístiques de tots els personatges i es torna a executar el while
+                                    // Si l'estadística està dins del rang, es comprova que sigui vida per a fer maxHP i que sigui l'última característica per a donar per completat el personatge
                                     else
                                     {
-                                        Modules.ResetStatsCheckers(ref characterStatsCompleted, ref statIndexer, ref statsTries);
-                                        characterTries--;
+                                        if (statIndexer == Zero) archerStats[Zero] = archerStats[One];
+                                        statIndexer++;
                                     }
-
-                                    Console.Clear();
-                                    Console.ForegroundColor = ConsoleColor.Yellow;
                                 }
+
+                                Console.ReadKey();
+                                Console.Clear();
+                                Console.ForegroundColor = ConsoleColor.Yellow;
+
+                                Modules.ResetStatsCheckers(ref statIndexer, ref statsTries);
+                                Console.Write(MsgDecorationBarbarian);
+
+                                // Estadístiques de bàrbar
+                                while (statIndexer < Three)
+                                {
+                                    Console.ForegroundColor = ConsoleColor.Yellow;
+
+                                    // Llegeix l'estadística que indica statIndexer
+                                    Console.Write(msgBarbarianStats[statIndexer]);
+                                    Console.ForegroundColor = ConsoleColor.Green;
+                                    barbarianStats[statIndexer + One] = Convert.ToDouble(Console.ReadLine());
+
+                                    // Si l'estadística no està dins del rang, retorna error i es resta un intent
+                                    if (!Modules.CheckValidAttributes(barbarianStats[statIndexer + One], minStats[One, statIndexer], maxStats[One, statIndexer]))
+                                    {
+                                        Console.ForegroundColor = ConsoleColor.Red;
+                                        Console.WriteLine(MsgInputNotValid);
+                                        statsTries--;
+
+                                        // Si l'usuari s'ha equivocat tres vegades assignant un atribut, s'assigna el valor mínim
+                                        if (statsTries == Zero)
+                                        {
+                                            Console.WriteLine(MsgOutOfTriesStats);
+                                            barbarianStats[statIndexer + One] = minStats[One, statIndexer];
+
+                                            if (statIndexer == Zero) barbarianStats[Zero] = barbarianStats[One];
+
+                                            statIndexer++;
+                                            statsTries = Three;
+                                        }
+                                    }
+                                    // Si l'estadística està dins del rang, es comprova que sigui vida per a fer maxHP i que sigui l'última característica per a donar per completat el personatge
+                                    else
+                                    {
+                                        if (statIndexer == Zero) barbarianStats[Zero] = barbarianStats[One];
+                                        statIndexer++;
+                                    }
+                                }
+
+                                Console.ReadKey();
+                                Console.Clear();
+                                Console.ForegroundColor = ConsoleColor.Yellow;
+
+                                Modules.ResetStatsCheckers(ref statIndexer, ref statsTries);
+                                Console.Write(MsgDecorationMage);
+
+                                // Estadístiques de la maga
+                                while (statIndexer < Three)
+                                {
+                                    Console.ForegroundColor = ConsoleColor.Yellow;
+
+                                    // Llegeix l'estadística que indica statIndexer
+                                    Console.Write(msgMageStats[statIndexer]);
+                                    Console.ForegroundColor = ConsoleColor.Green;
+                                    mageStats[statIndexer + One] = Convert.ToDouble(Console.ReadLine());
+
+                                    // Si l'estadística no està dins del rang, retorna error i es resta un intent
+                                    if (!Modules.CheckValidAttributes(mageStats[statIndexer + One], minStats[Two, statIndexer], maxStats[Two, statIndexer]))
+                                    {
+                                        Console.ForegroundColor = ConsoleColor.Red;
+                                        Console.WriteLine(MsgInputNotValid);
+                                        statsTries--;
+
+                                        // Si l'usuari s'ha equivocat tres vegades assignant un atribut, s'assigna el valor mínim
+                                        if (statsTries == Zero)
+                                        {
+                                            Console.WriteLine(MsgOutOfTriesStats);
+                                            mageStats[statIndexer + One] = minStats[Two, statIndexer];
+
+                                            if (statIndexer == Zero) mageStats[Zero] = mageStats[One];
+
+                                            statIndexer++;
+                                            statsTries = Three;
+                                        }
+                                    }
+                                    // Si l'estadística està dins del rang, es comprova que sigui vida per a fer maxHP i que sigui l'última característica per a donar per completat el personatge
+                                    else
+                                    {
+                                        if (statIndexer == Zero) mageStats[Zero] = mageStats[One];
+                                        statIndexer++;
+                                    }
+                                }
+
+                                Console.ReadKey();
+                                Console.Clear();
+                                Console.ForegroundColor = ConsoleColor.Yellow;
+
+                                Modules.ResetStatsCheckers(ref statIndexer, ref statsTries);
+                                Console.Write(MsgDecorationDruid);
+
+                                // Estadístiques del druida
+                                while (statIndexer < Three)
+                                {
+                                    Console.ForegroundColor = ConsoleColor.Yellow;
+
+                                    // Llegeix l'estadística que indica statIndexer
+                                    Console.Write(msgDruidStats[statIndexer]);
+                                    Console.ForegroundColor = ConsoleColor.Green;
+                                    druidStats[statIndexer + One] = Convert.ToDouble(Console.ReadLine());
+
+                                    // Si l'estadística no està dins del rang, retorna error i es resta un intent
+                                    if (!Modules.CheckValidAttributes(druidStats[statIndexer + One], minStats[Three, statIndexer], maxStats[Three, statIndexer]))
+                                    {
+                                        Console.ForegroundColor = ConsoleColor.Red;
+                                        Console.WriteLine(MsgInputNotValid);
+                                        statsTries--;
+
+                                        // Si l'usuari s'ha equivocat tres vegades assignant un atribut, s'assigna el valor mínim
+                                        if (statsTries == Zero)
+                                        {
+                                            Console.WriteLine(MsgOutOfTriesStats);
+                                            druidStats[statIndexer + One] = minStats[Three, statIndexer];
+
+                                            if (statIndexer == Zero) druidStats[Zero] = druidStats[One];
+
+                                            statIndexer++;
+                                            statsTries = Three;
+                                        }
+                                    }
+                                    // Si l'estadística està dins del rang, es comprova que sigui vida per a fer maxHP i que sigui l'última característica per a donar per completat el personatge
+                                    else
+                                    {
+                                        if (statIndexer == Zero) druidStats[Zero] = druidStats[One];
+                                        statIndexer++;
+                                    }
+                                }
+
+                                Console.ReadKey();
+                                Console.Clear();
+                                Console.ForegroundColor = ConsoleColor.Yellow;
+
+                                Modules.ResetStatsCheckers(ref statIndexer, ref statsTries);
+                                Console.Write(MsgDecorationMonster);
+
+                                // Estadístiques del monstre
+                                while (statIndexer < Three)
+                                {
+                                    Console.ForegroundColor = ConsoleColor.Yellow;
+
+                                    // Llegeix l'estadística que indica statIndexer
+                                    Console.Write(msgDruidStats[statIndexer]);
+                                    Console.ForegroundColor = ConsoleColor.Green;
+                                    monsterStats[statIndexer + One] = Convert.ToDouble(Console.ReadLine());
+
+                                    // Si l'estadística no està dins del rang, retorna error i es resta un intent
+                                    if (!Modules.CheckValidAttributes(monsterStats[statIndexer + One], minStats[Four, statIndexer], maxStats[Four, statIndexer]))
+                                    {
+                                        Console.ForegroundColor = ConsoleColor.Red;
+                                        Console.WriteLine(MsgInputNotValid);
+                                        statsTries--;
+
+                                        // Si l'usuari s'ha equivocat tres vegades assignant un atribut, s'assigna el valor mínim
+                                        if (statsTries == Zero)
+                                        {
+                                            Console.WriteLine(MsgOutOfTriesStats);
+                                            monsterStats[statIndexer + One] = minStats[Four, statIndexer];
+
+                                            if (statIndexer == Zero) monsterStats[Zero] = monsterStats[One];
+
+                                            statIndexer++;
+                                            statsTries = Three;
+                                        }
+                                    }
+                                    // Si l'estadística està dins del rang, es comprova que sigui vida per a fer maxHP i que sigui l'última característica per a donar per completat el personatge
+                                    else
+                                    {
+                                        if (statIndexer == Zero) monsterStats[Zero] = monsterStats[One];
+                                        statIndexer++;
+                                    }
+                                }
+
                                 break;
+
+
+
 
                             // Dificultat Randomitzada
                             case Four:
@@ -460,31 +505,44 @@ namespace GameProject
                                 mageStats = Modules.AssignStats(minStats, maxStats, Two);
                                 druidStats = Modules.AssignStats(minStats, maxStats, Three);
                                 monsterStats = Modules.AssignStats(minStats, maxStats, Four);
+                                characterStatsCompleted = true;
                                 break;
 
                         }
 
-                        // Si no es completen les estadístiques correctament el joc torna al menú principal
-                        if (!characterStatsCompleted) break;
 
-                        // Es retornen les estadístiques
+
                         Modules.PrintStats(archerName, MsgArcherName, archerStats);
-                        Modules.PrintStats(barbarianName, MsgBarbarianName,barbarianStats);
-                        Modules.PrintStats(mageName, MsgMageName,mageStats);
-                        Modules.PrintStats(druidName, MsgDruidName,druidStats);
+                        Modules.PrintStats(barbarianName, MsgBarbarianName, barbarianStats);
+                        Modules.PrintStats(mageName, MsgMageName, mageStats);
+                        Modules.PrintStats(druidName, MsgDruidName, druidStats);
                         Modules.PrintStats(MsgMonsterName, MsgMonsterName, monsterStats);
 
                         Console.Clear();
 
+                        int[] positions = { 1, 2, 3, 4 };
+                        int[] turnPositions = Modules.SortArrayRandomly(positions);
+
+                        foreach (int position in turnPositions) { Console.WriteLine(position); }
+
+                        Console.ReadKey();
 
                         break;
-
 
                         /*
                         // Joc
 
                         Console.WriteLine("\n - " + MsgBattle);
                         Console.ReadKey();
+
+                        // While que s'executa cada torn
+                        while (!battleEnded)
+                        {
+
+
+
+                        }
+
 
                         turn = 1;
                         turnTries = Three;
@@ -956,9 +1014,9 @@ namespace GameProject
                         }
 
                         break;
-*/
-                }    
+        */
+                }
             }
-        }               
-    }                   
+        }
+    }
 }

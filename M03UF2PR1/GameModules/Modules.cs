@@ -82,25 +82,12 @@ public class Modules
     }
 
     // Fa reset de les variables utilitzades per a completar les estadístiques
-    public static void ResetStatsCheckers(ref bool statsCompleted, ref int statIndexer, ref int statsTries)
+    public static void ResetStatsCheckers(ref int statIndexer, ref int statsTries)
     {
-        statsCompleted = false;
         statIndexer = 0;
         statsTries = 3;
     }
 
-    // Fa reset de les variables utilitzades per a completar les estadístiques i dels booleans que marquen que s'ha completat un personatge
-    public static void ResetStatsCheckers(ref bool statsCompleted, ref int statIndexer, ref int statsTries, ref bool archerStatsCompleted, ref bool barbarianStatsCompleted, ref bool mageStatsCompleted, ref bool druidStatsCompleted, ref int characterStatsTries)
-    {
-        statsCompleted = false;
-        archerStatsCompleted = false;
-        barbarianStatsCompleted = false;
-        mageStatsCompleted = false;
-        druidStatsCompleted = false;
-        statIndexer = 0;
-        statsTries = 3;
-        characterStatsTries = 3;
-    }
 
     // Genera un valor aleatori entre mínim i màxim
     public static double GenerateRandom(int minValue, int maxValue)
@@ -110,6 +97,7 @@ public class Modules
         return Convert.ToDouble(rand.Next(minValue, maxValue + 1));
     }
 
+    // Mostra per consola les estadístiques d'un personatge
     public static void PrintStats(string characterName, string character, double[] characterStats)
     {
         const string MsgStats = "\n\n--- Estadístiques {0} ({1}) ---\n\n Vida: {2} // Dany: {3} // Reducció de dany: {4}";
@@ -122,6 +110,23 @@ public class Modules
         Console.WriteLine(MsgContinue);
         Console.ReadKey();
 
+    }
+
+    // Reordena un array aleatoriament
+    public static int[] SortArrayRandomly(int[] sortedArray)
+    {
+        int randomPosition, temp;
+
+        for(int i = 0; i < 4; i++)
+        {
+            // Agafa una posició aleatoria i la intercambia per la posició i (que es guardada temporalment per a fer l'intercanvi)
+            randomPosition = Convert.ToInt32(GenerateRandom(0, 4 - i));
+            temp = sortedArray[i];
+            sortedArray[i] = sortedArray[randomPosition];
+            sortedArray[randomPosition] = temp;
+        }
+
+        return sortedArray;
     }
 
 }
