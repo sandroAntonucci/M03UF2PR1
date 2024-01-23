@@ -73,3 +73,107 @@ Rep les característiques i el nom del personatge i printa per pantalla els valo
 ### SortArrayRandomly
 
 Reorganitza una array de longitud 4 aleatoriament (s'utilitza per als torns aleatoris dels herois). No hi ha classes d'equivalència.
+
+### HandleAttack
+
+Rep el dany del personatge, les característiques del monstre i el nom de l'atacant per als missatges cap a l'usuari. Comprova si s'ha fallat l'atac amb una funció externa (MissedAttack) o si és crític (IsCrit). Retorna diferents missatges depenent dels retorns d'aquestes funcions externes i resta el dany a la vida del monstre comprovant també la seva reducció de dany. No hi ha classes d'equivalència (retorna una string que es el missatge per a l'usuari).
+
+### IsCrit
+
+Genera un número aleatori entre 1 i 101 i si aquest és menor que 10 significa que és un atac crític. Retorna true o false depén del random (no es pot comprovar mitjançant unitTesting).
+
+DOMINI: INT
+
+// Retorna True
+* Valors vàlids: Nombre entre el rang - Valor mínim: 1 \ Valor màxim: 10
+
+// Retorna False
+* Valors invàlids: Nombre fora del rang - Valor mínim: 11 \ Valor màxim: 100
+
+### MissedAttack
+
+Genera un número aleatori entre 1 i 101 i si aquest és menor o igual que 5 significa que s'ha fallat l'atac. Retorna true o false depén del random (no es pot comprovar mitjançant unitTesting).
+
+DOMINI: INT
+// Retorna True
+* Valors vàlids: Nombre entre el rang - Valor mínim: 1 \ Valor màxim: 5
+
+// Retorna False
+* Valors invàlids: Nombre fora del rang - Valor mínim: 6 \ Valor màxim: 100
+
+### NotValidAction
+
+Es passa l'acció com a paràmetre i comprova si no és vàlida (no està entre 1 i 3).  
+
+DOMINI: INT
+// Retorna True
+* Valors vàlids: Nombre menor que el mínim - Valor mínim: -Valor màxim int / Valor màxim: 0
+* Valors vàlids: Nombre major que el mínim - Valor mínim: 3 / Valor màxim: Valor màxim int
+
+// Retorna False
+* Valors invàlids: Nombre entre el rang - Valor mínim: 1 \ Valor màxim: 3
+
+### ArcherSpecial
+Rep la variable monsterStun per referència per indicar que està parat, el para durant dos torns i mostra per consola que el monstre no pot atacar. No retorna res i no té classes d'equivalència.
+
+### BarbarianSpecial
+Rep la variable per referència de la reducció total del bàrbar i l'assigna per durar 2 torns, també informa a l'usuari. No retorna res i no té classes d'equivalència.
+
+### MageSpecial
+Rep la variable per referència de la vida del monstre i el dany de la maga i l'aplica multiplicat per tres, també informa a l'usuari. No retorna res i no té classes d'equivalència.
+
+### DruidSpecal
+Rep les característiques de la vida de tots els personatges i comprova si sobrepassen la vida màxima o no amb la cura i si estàn morts. Els personatges vius que no sobrepassen el màxim obtenen 500 de curació, els que els sobrepassen directament s'assigna el màxim. No té classes d'equivalència i no retorna res.
+
+### CheckHealth
+Rep la vida i la vida màxima i comprova si aquesta més 500 dona més.
+
+No té valors vàlids ni invàlids ni valors límit.
+
+// Retorna 0 
+* HP menor o igual que 0
+
+// Retorna 1 
+* HP més 500 major que maxHP
+
+// Retorna 2
+* HP més 500 menor que maxHP
+
+### CheckMonsterAlive
+Rep la vida actual del monstre i retorna true si es major a 0, si no retorna false.
+
+// True
+* Valor vàlid: Nombre positiu - Límit inferior: 1 // Límit superior: Max INT
+
+// False
+* Valor invàlid: Nombre igual a 0 o negatiu - Limit inferior: -Max INT // Límit superior: 0;
+
+### ReduceCooldowns
+Rep totes les variables de cooldown per referència i resta 1 si son major que 0. No retorna res ni té classes d'equivalència.
+
+### ResetCooldowns
+S'utilitza al començament de la batalla per posar a 0 els contadors de tots els cooldowns. No retorna res ni té classes d'equivalència.
+
+### MonsterAttack (per a tots els herois menys al bàrbar)
+Rep el dany del monstre, la vida del personatge i si esta protegit. Si no està protegit, es resta el dany a la vida menys el percentatge de la reducció, si ho està, fa el mateix pero multiplica la reducció per dos. Retorna un missatge per a l'usuari. No té classes d'equivalència.
+
+### MonsterAttack (per al bàrbar)
+Rep el dany del monstre, la vida del personatge i si esta protegit. Si no està protegit, es resta el dany a la vida menys el percentatge de la reducció, si ho està, fa el mateix pero multiplica la reducció per dos. També comprova si té l'habilitat especial activada, si la té, no pot atacar. Retorna un missatge per a l'usuari. No té classes d'equivalència.
+
+### CheckDeadCharacter
+Rep la vida actual del personatge i retorna true si es menor que 0, si no retorna false.
+
+// True
+* Valor vàlid: Nombre igual a 0 o negatiu - Limit inferior: -Max INT // Límit superior: 0
+
+// False
+* Valor invàlid: Nombre negatiu - Límit inferior: 1 // Límit superior: Max INT
+
+### CheckGameLost 
+Rep una matriu amb totes les característiques del personatge i comprova amb el módul chekcDeadCharacter qui no està mort. Si hi ha algún personatge que no està mort, retorna true, si no, retorna false.
+
+### OrderDesc
+Fent servir el bubbleSort rep una array desordenada i retorna una array ordenada de manera descendent. No té classes d'equivalència.
+
+### PrintHP 
+Rep l'array ordenada i printa un missatge cap a l'usuari si el valor és major que 0 i coincideix amb el personatge. No té classes d'equivalència.
