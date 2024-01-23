@@ -1,6 +1,17 @@
 # M03UF2PR1
 Pràctica d'herois vs monstre fent servir el disseny modular
 
+## ESQUEMA ESTADÍSTIQUES
+
+MATRIU:
+
+Primera posició (Arquera) -> Array amb vida màxima, vida actual, dany i reducció en aquest ordre
+Segona posició (Bàrbar) -> Array amb vida màxima, vida actual, dany i reducció en aquest ordre
+Tercera posició (Maga) -> Array amb vida màxima, vida actual, dany i reducció en aquest ordre
+Cuarta posició (Druida) -> Array amb vida màxima, vida actual, dany i reducció en aquest ordre
+
+Les estadístiques del monstre es guarden en una array apart.
+
 ## Proves de caixa negra. Classes d'equivalència
 
 ### CheckAndAssignValidNames
