@@ -1,5 +1,7 @@
 using GameModules;
 
+// Hi ha metodes dels quals no es pot fer UnitTesting ja que generen valors aleatoris que no son possibles de testejar
+
 namespace TestProjectGameModules
 {
     [TestClass]
@@ -241,24 +243,104 @@ namespace TestProjectGameModules
     }
 
     [TestClass]
-    public class UnitTestSaveNames
+    public class UnitTestValidAction
     {
 
         [TestMethod]
-        public void SaveNames_ValidNames()
+        public void ValidAction_NumGreaterThanMax()
         {
 
             //Arrange
-            const string ArcherName = "a", BarbarianName = "b", MageName = "c", DruidName = "d";
-            string[] ExpectedNames = { "a", "b", "c", "d" };
-
-            //Act
-            string[] resultNames = Modules.SaveNames(ArcherName, BarbarianName, MageName, DruidName);
+            const int ActionChosen = 4;
 
             //Assert
+            Assert.IsTrue(Modules.ValidAction(ActionChosen));
+        }
 
-            Assert.AreEqual(resultNames, ExpectedNames);
+        [TestMethod]
+        public void ValidAction_NumLowerThanMin()
+        {
+
+            //Arrange
+            const int ActionChosen = 0;
+
+            //Assert
+            Assert.IsTrue(Modules.ValidAction(ActionChosen));
+        }
+
+        [TestMethod]
+        public void ValidAction_NumBetweenRange()
+        {
+
+            //Arrange
+            const int ActionChosen = 2;
+
+            //Assert
+            Assert.IsFalse(Modules.ValidAction(ActionChosen));
         }
     }
 
+    [TestClass]
+    public class UnitTestCheckHealth
+    {
+
+        [TestMethod]
+        public void CheckHealth_HPEqualsZero()
+        {
+
+            //Arrange
+            int HP = 0, MaxHP = 1000;
+
+            //Assert
+            Assert.AreEqual(Modules.CheckHealth(HP,MaxHP), 0);
+        }
+
+        [TestMethod]
+        public void CheckHealth_HPMoreHealMax()
+        {
+
+            //Arrange
+            int HP = 700, MaxHP = 1000;
+
+            //Assert
+            Assert.AreEqual(Modules.CheckHealth(HP, MaxHP), 1);
+        }
+
+        [TestMethod]
+        public void ValidAction_HPMoreHealNotMax()
+        {
+
+            //Arrange
+            int HP = 400, MaxHP = 1000;
+
+            //Assert
+            Assert.AreEqual(Modules.CheckHealth(HP, MaxHP), 2);
+        }
+    }
+
+    [TestClass]
+    public class UnitTestCheckDeadCharacter
+    {
+
+        [TestMethod]
+        public void CheckDeadCharacter_HPNegative()
+        {
+
+            //Arrange
+            int HP = -10;
+
+            //Assert
+            Assert.IsTrue(Modules.CheckDeadCharacter(HP));
+        }
+        [TestMethod]
+        public void CheckDeadCharacter_HPPositive()
+        {
+
+            //Arrange
+            int HP = 10;
+
+            //Assert
+            Assert.IsFalse(Modules.CheckDeadCharacter(HP));
+        }
+    }
 }

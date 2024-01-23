@@ -11,7 +11,7 @@ namespace GameProject
         static void Main()
         {
 
-            const int Zero = 0, One = 1, Two = 2, Three = 3, Four = 4, Percent = 100, Five = 5;
+            const int Zero = 0, One = 1, Two = 2, Three = 3, Four = 4, Five = 5;
 
             const string MsgAction = " · Introdueix la teva acció: ";
             const string MsgCharacterActions = "\n  1.- Atacar\n  2.- Protegir-se\n  3.- Habilitat especial\n\n";
@@ -29,11 +29,9 @@ namespace GameProject
             const string MsgGameDifficulty = "\nOK! Començem amb el selector de dificultat";
             const string MsgDifficultySelector = " · Selecciona una dificultat: \n\n  1.- Fàcil: Agafa el valor més alt del rang d’atributs dels personatges, i el més baix del monstre automàticament.\n  2.- Difícil:  Agafa el valor més baix del rang d’atributs dels personatges, i el més alt del monstre automàticament\n  3.- Personalitzat: Introduiràs els atributs dels personatges manualment\n  4.- Random: S'assignaràn els valors aleatoriament\n\n";
             const string MsgOutOfTriesStats = "Has assignat l'estadística malament tres vegades, s'assigna el valor mínim";
-            const string MsgHP = "{0} ({1}) té {2} vida. (si és 0 o negatiu està mort)";
 
             const string MsgTurn = "\n\n --- Torn de {0} ({1}) --- \n\n";
 
-            const string MsgFinalStats = "\n\n --- Estadístiques Finals --- \n\n";
             const string MsgDecoration = "\n\n-----------------------------------------\n\n";
             const string MsgDecorationArcher = "\n\n--- Estadístiques d'arquera ---\n\n";
             const string MsgDecorationBarbarian = "\n\n--- Estadístiques de bàrbar ---\n\n";
@@ -48,7 +46,6 @@ namespace GameProject
             const string MsgArcherName = "Arquera";
 
             const string MsgBarbarianName = "Bàrbar";
-            const string MsgBarbarianDied = "El bàrbar ha mort :(";
 
             const string MsgMageName = "Maga";
 
@@ -59,9 +56,7 @@ namespace GameProject
             const string MsgMonsterAttack = "\nEl monstre ataca a tots els herois: ";
             const string MsgMonsterCantAttack = "\nEl monstre està atordit i no pot atacar.";
 
-            const string MsgBattle = "Comença la batalla!";
-
-            int statIndexer = 0, startGame, menuTries, difficulty, difficultyTries = 3, statsTries = 3, namesTries = 3, characterTries = 3, turnTries = 3, actionChosen = 0, turn = 1;
+            int statIndexer = 0, startGame, menuTries, difficulty, difficultyTries = 3, statsTries = 3, namesTries = 3, turnTries = 3, actionChosen = 0;
 
             // Aquesta part la podría fer constant amb el readonly però no sé si es pot utilitzar, al readme hi ha més informació sobre la organització de les matrius
             double[,] minStats = { { 1500, 200, 25 }, { 3000, 150, 35 }, { 1100, 300, 20 }, { 2000, 70, 25 }, { 7000, 300, 20 } };
@@ -107,7 +102,8 @@ namespace GameProject
 
             string archerName, barbarianName, mageName, druidName;
 
-            bool exitGame = false, gameEnded = false, characterStatsCompleted = false, archerStatsCompleted = false, barbarianStatsCompleted = false, mageStatsCompleted = false, druidStatsCompleted = false, monsterStatsCompleted = false, turnEnded = false, battleEnded = false;
+            // CharacterStatsCompleted marca que no s'utilitza però si que s'utilitza per a la creació de personatges
+            bool exitGame = false, gameEnded = false;
 
             while (!(exitGame))         //Joc interminable mentre el jugador no vulgui sortir.
             {
@@ -257,7 +253,6 @@ namespace GameProject
                                 mageStats = Modules.AssignStats(maxStats, Two);
                                 druidStats = Modules.AssignStats(maxStats, Three);
                                 monsterStats = Modules.AssignStats(minStats, Four);
-                                characterStatsCompleted = true;
                                 break;
 
                             // Dificultad difícil - Agafa el valor més baix del rang d'atributs dels personatges, i el més alt del monstre automàticament.
@@ -267,7 +262,6 @@ namespace GameProject
                                 mageStats = Modules.AssignStats(minStats, Two);
                                 druidStats = Modules.AssignStats(minStats, Three);
                                 monsterStats = Modules.AssignStats(maxStats, Four);
-                                characterStatsCompleted = true;
                                 break;
 
 
@@ -507,7 +501,6 @@ namespace GameProject
                                 mageStats = Modules.AssignStats(minStats, maxStats, Two);
                                 druidStats = Modules.AssignStats(minStats, maxStats, Three);
                                 monsterStats = Modules.AssignStats(minStats, maxStats, Four);
-                                characterStatsCompleted = true;
                                 break;
 
                         }
@@ -640,7 +633,7 @@ namespace GameProject
 
                                                             if (mageSpecialCooldown == Zero)
                                                             {
-                                                                Modules.MageSpecial(ref monsterStats, mageStats[2]);
+                                                                Modules.MageSpecial(ref monsterStats, mageStats[Two]);
                                                                 mageSpecialCooldown = Five;
                                                             }
                                                             else
@@ -718,7 +711,7 @@ namespace GameProject
                                         if (i == One)
                                         {
                                             // Comprova si el personatge està viu
-                                            if (characterStats[i][1] > 0)
+                                            if (characterStats[i][One] > Zero)
                                             {
                                                 Console.WriteLine(MsgMonsterAttack);
                                                 Console.WriteLine(Modules.MonsterAttack(monsterStats[Two], ref characterStats[i], characterNames[i], characterProtected[i], barbarianReductSpecialTurns));
@@ -730,7 +723,7 @@ namespace GameProject
                                         }
                                         else 
                                         {
-                                            if (characterStats[i][1] > 0)
+                                            if (characterStats[i][One] > Zero)
                                             {
                                                 Console.WriteLine(MsgMonsterAttack);
                                                 Console.WriteLine(Modules.MonsterAttack(monsterStats[Two], ref characterStats[i], characterNames[i], characterProtected[i]));
