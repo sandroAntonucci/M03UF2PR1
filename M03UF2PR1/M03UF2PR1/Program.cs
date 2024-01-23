@@ -11,26 +11,27 @@ namespace GameProject
         static void Main()
         {
 
-            const int Zero = 0, One = 1, Two = 2, Three = 3, Four = 4, Percent = 100, Five = 5;
+            const int Zero = 0, One = 1, Two = 2, Three = 3, Four = 4, Five = 5;
 
             const string MsgAction = " · Introdueix la teva acció: ";
             const string MsgCharacterActions = "\n  1.- Atacar\n  2.- Protegir-se\n  3.- Habilitat especial\n\n";
             const string MsgInputNotValid = "\n - Aquesta entrada no és vàlida.\n\n";
             const string MsgOutOfTries = "S'han acabat els intents.";
-            const string MsgProtect = " es protegeix del monstre i duplica la seva reducció de dany pel pròxim atac.";
-            const string MsgCooldown = "L'habilitat especial encara té temps d'espera. Falten ";
+            const string MsgProtect = "\n - {0} es protegeix del monstre i duplica la seva reducció de dany pel pròxim atac.";
+            const string MsgCooldown = "\n - L'habilitat especial encara té temps d'espera. Falten {0} torns";
             const string MsgLost = "El monstre ha matat a tot el grup. Has perdut :/";
             const string MsgWon = "Felicitats, has matat al monstre!";
             const string MsgStart = " Benvingut a Herois vs Monstre!\n Que vols fer?";
             const string MsgPlay = "\n 1. Iniciar una nova batalla";
             const string MsgQuit = " 0. Sortir\n";
+            const string MsgCharacterDead = "{0} ({1}) ha mort :(";
             const string MsgCharNames = "Introdueix els noms dels personatges (arquera, bàrbar, mag i druida en aquest ordre) separats per comes i un espai (et queden {0} intents): \n\n - ";
-            const string MsgCharStats = "\nOK! Començem amb la creació de personatges. ";
             const string MsgGameDifficulty = "\nOK! Començem amb el selector de dificultat";
             const string MsgDifficultySelector = " · Selecciona una dificultat: \n\n  1.- Fàcil: Agafa el valor més alt del rang d’atributs dels personatges, i el més baix del monstre automàticament.\n  2.- Difícil:  Agafa el valor més baix del rang d’atributs dels personatges, i el més alt del monstre automàticament\n  3.- Personalitzat: Introduiràs els atributs dels personatges manualment\n  4.- Random: S'assignaràn els valors aleatoriament\n\n";
             const string MsgOutOfTriesStats = "Has assignat l'estadística malament tres vegades, s'assigna el valor mínim";
 
-            const string MsgFinalStats = "\n\n --- Estadístiques Finals --- \n\n";
+            const string MsgTurn = "\n\n --- Torn de {0} ({1}) --- \n\n";
+
             const string MsgDecoration = "\n\n-----------------------------------------\n\n";
             const string MsgDecorationArcher = "\n\n--- Estadístiques d'arquera ---\n\n";
             const string MsgDecorationBarbarian = "\n\n--- Estadístiques de bàrbar ---\n\n";
@@ -38,39 +39,31 @@ namespace GameProject
             const string MsgDecorationDruid = "\n\n--- Estadístiques de druida ---\n\n";
             const string MsgDecorationMonster = "\n\n--- Estadístiques de monstre ---\n\n";
 
-
-            const string MsgOutOfTriesCharacters = "\nT'has equivocat 3 vegades donant atributs als personatges, tornes al menú principal.";
+            const string MsgOutOfTriesTurn = "\n T'has equivocat 3 vegades escollint una opció. Es passa el torn.";
             const string MsgOutOfTriesNames = "\nT'has equivocat 3 vegades donant noms als personatges, tornes al menú principal.";
             const string MsgOutOfTriesDifficulty = "\nT'has equivocat 3 vegades escollint la dificultat, tornes al menú principal.";
 
             const string MsgArcherName = "Arquera";
-            const string MsgArcherDied = "\nL'arquera ha mort :(";
 
             const string MsgBarbarianName = "Bàrbar";
-            const string MsgBarbarianSpecial = "\n - El bàrbar activa la seva habilitat especial i augmenta la seva defensa al 100% durant 3 torns.";
-            const string MsgBarbarianMaxReduct = "\nLa reducció de dany del bàrbar ja està al 100%";
-            const string MsgBarbarianDied = "El bàrbar ha mort :(";
 
             const string MsgMageName = "Maga";
-            const string MsgMageSpecial = "\n - La maga activa la seva habilitat especial i dispara una bola de foc que fa 3 cops el seu atac.";
-            const string MsgMageDied = "El mag ha mort :(";
 
             const string MsgDruidName = "Druida";
-            const string MsgDruidSpecial = "\n - El druida activa la seva habilitat especial i cura a tothom 500 de vida.";
-            const string MsgDruidDied = "El druida ha mort :(";
 
+            const string MsgMonsterTurn = "--- Torn de Monstre ---";
             const string MsgMonsterName = "Monstre";
             const string MsgMonsterAttack = "\nEl monstre ataca a tots els herois: ";
             const string MsgMonsterCantAttack = "\nEl monstre està atordit i no pot atacar.";
 
-            const string MsgBattle = "Comença la batalla!";
-            const string MsgTurn = "Torn ";
-
-            int statIndexer = 0, startGame, menuTries, difficulty, difficultyTries = 3, statsTries = 3, namesTries = 3, characterTries = 3, turnTries = 3, actionChosen = 0, turn = 1;
+            int statIndexer = 0, startGame, menuTries, difficulty, difficultyTries = 3, statsTries = 3, namesTries = 3, turnTries = 3, actionChosen = 0;
 
             // Aquesta part la podría fer constant amb el readonly però no sé si es pot utilitzar, al readme hi ha més informació sobre la organització de les matrius
             double[,] minStats = { { 1500, 200, 25 }, { 3000, 150, 35 }, { 1100, 300, 20 }, { 2000, 70, 25 }, { 7000, 300, 20 } };
             double[,] maxStats = { { 2000, 300, 35 }, { 3750, 250, 45 }, { 1500, 400, 35 }, { 2500, 120, 40 }, { 10000, 400, 30 } };
+
+            // Guarda si el personatge està protegit o no
+            bool[] characterProtected = { false, false, false, false };
 
             // Les estadístiques les divideixo en un array per a cada personatge i el monstre
             double[] archerStats = new double[4];
@@ -78,6 +71,8 @@ namespace GameProject
             double[] mageStats = new double[4];
             double[] druidStats = new double[4];
             double[] monsterStats = new double[4];
+
+            int[] basePositions = { 0, 1, 2, 3 };
 
             // Missatges a l'usuari de les estadístiques (no son constants ja que son arrays)
             string[] msgArcherStats = { "\n - Introdueix la vida de l'arquera (entre 1500 i 2000): ",
@@ -100,17 +95,15 @@ namespace GameProject
                                             "\n - Introdueix l'atac del monstre (entre 300 i 400): ",
                                             "\n - Introdueix la reducció de dany del monstre (entre 20% i 30%): "};
 
-            // Cooldown de les habilitats especials
-            double archerSpecialCooldown = 0;
-            double barbarianSpecialCooldown = 0, barbarianReductSpecialTurns = 0;
-            double mageSpecialCooldown = 0;
-            double druidSpecialCooldown = 0;
+            string[] msgCharacterType = {"Arquera", "Bàrbar", "Maga", "Druida"};
 
-            double monsterStun = 0;
+            // Cooldown de les habilitats especials
+            int archerSpecialCooldown = 0, barbarianSpecialCooldown = 0, barbarianReductSpecialTurns = 0, mageSpecialCooldown = 0, druidSpecialCooldown = 0, monsterStun = 0;
 
             string archerName, barbarianName, mageName, druidName;
 
-            bool exitGame = false, characterStatsCompleted = false, archerStatsCompleted = false, barbarianStatsCompleted = false, mageStatsCompleted = false, druidStatsCompleted = false, monsterStatsCompleted = false, turnEnded = false, battleEnded = false;
+            // CharacterStatsCompleted marca que no s'utilitza però si que s'utilitza per a la creació de personatges
+            bool exitGame = false, gameEnded = false;
 
             while (!(exitGame))         //Joc interminable mentre el jugador no vulgui sortir.
             {
@@ -171,6 +164,11 @@ namespace GameProject
                         barbarianName = "";
                         mageName = "";
                         druidName = "";
+
+                        // Es resetejen els cooldowns
+                        Modules.ResetCooldowns(ref archerSpecialCooldown, ref barbarianSpecialCooldown, ref mageSpecialCooldown, ref druidSpecialCooldown, ref barbarianReductSpecialTurns, ref monsterStun);
+
+                        gameEnded = false;
 
                         // Es comprova que els noms s'han introduït correctament i s'assignen als personatges, si no, es resta un intent (3) i es tornen a demanar
                         do
@@ -255,7 +253,6 @@ namespace GameProject
                                 mageStats = Modules.AssignStats(maxStats, Two);
                                 druidStats = Modules.AssignStats(maxStats, Three);
                                 monsterStats = Modules.AssignStats(minStats, Four);
-                                characterStatsCompleted = true;
                                 break;
 
                             // Dificultad difícil - Agafa el valor més baix del rang d'atributs dels personatges, i el més alt del monstre automàticament.
@@ -265,7 +262,6 @@ namespace GameProject
                                 mageStats = Modules.AssignStats(minStats, Two);
                                 druidStats = Modules.AssignStats(minStats, Three);
                                 monsterStats = Modules.AssignStats(maxStats, Four);
-                                characterStatsCompleted = true;
                                 break;
 
 
@@ -505,7 +501,6 @@ namespace GameProject
                                 mageStats = Modules.AssignStats(minStats, maxStats, Two);
                                 druidStats = Modules.AssignStats(minStats, maxStats, Three);
                                 monsterStats = Modules.AssignStats(minStats, maxStats, Four);
-                                characterStatsCompleted = true;
                                 break;
 
                         }
@@ -520,501 +515,263 @@ namespace GameProject
 
                         Console.Clear();
 
-                        int[] positions = { 1, 2, 3, 4 };
-                        int[] turnPositions = Modules.SortArrayRandomly(positions);
+                        // S'emmagatzemen les característiques en una jagged array per a que siguin utilitzables als torns
+                        double[][] characterStats = {archerStats, barbarianStats, mageStats, druidStats};
 
-                        foreach (int position in turnPositions) { Console.WriteLine(position); }
-
-                        Console.ReadKey();
-
-                        break;
-
-                        /*
                         // Joc
 
-                        Console.WriteLine("\n - " + MsgBattle);
-                        Console.ReadKey();
-
-                        // While que s'executa cada torn
-                        while (!battleEnded)
+                        while (!gameEnded)
                         {
+                            // Es tornen a randomitzar els torns
+                            int[] characterTurn = Modules.SortArrayRandomly(basePositions);
 
+                       
 
-
-                        }
-
-
-                        turn = 1;
-                        turnTries = Three;
-
-                        // Aquest while s'executa mentre hi quedi un personatge viu, el monstre no hagi mort i hi quedin intents
-                        while ((archerHP > Zero || barbarianHP > Zero || mageHP > Zero || druidHP > Zero) && monsterHP > Zero && turnTries > Zero)
-                        {
-
-                            Console.ForegroundColor = ConsoleColor.Yellow;
-
-                            //Cada torn resta un al cooldown de les habilitats si està actiu
-
-                            if (archerSpecialCooldown > Zero) archerSpecialCooldown--;
-
-                            if (barbarianSpecialCooldown > Zero) barbarianSpecialCooldown--;
-                            if (barbarianReductSpecialTurns > Zero) barbarianReductSpecialTurns--;
-
-                            if (mageSpecialCooldown > Zero) mageSpecialCooldown--;
-
-                            if (druidSpecialCooldown > Zero) druidSpecialCooldown--;
-
-                            turnTries = Three;
-
-                            // Torn Arquera
-                            while (turnTries > Zero && turnEnded == false && archerHP > Zero && monsterHP > Zero)
+                            // Torn d'herois 
+                            for (int i = Zero; i < characterTurn.Length; i++)
                             {
-                                Console.Clear();
-                                Console.ForegroundColor = ConsoleColor.Yellow;
-                                Console.WriteLine("--- " + MsgTurn + turn + " ---\n\n");
 
-                                Console.Write(" - " + MsgArcherName + " - \n" + MsgCharacterActions + MsgAction);
-                                actionChosen = Convert.ToInt32(Console.ReadLine());
-
-                                // Si la entrada no es vàlida, es treu un intent i es torna a executar el while
-                                if (actionChosen < 1 || actionChosen > Three)
+                                if (Modules.CheckMonsterAlive(monsterStats[One]))
                                 {
-                                    turnTries--;
-                                    Console.WriteLine(MsgInputNotValid);
-                                    Console.ReadKey();
-                                }
-                                else
-                                {
-                                    Console.ForegroundColor = ConsoleColor.Green;
-                                    // Switch per a executar l'acció escollida pel jugador
-                                    switch (actionChosen)
+                                    if (characterStats[characterTurn[i]][1] > Zero)
                                     {
+                                        Console.ForegroundColor = ConsoleColor.Yellow;
+                                        Console.Write(MsgTurn, characterNames[characterTurn[i]], msgCharacterType[characterTurn[i]]);
 
-                                        // Acció d'atacar
-                                        case One:
-                                            monsterHP -= archerDMG * ((Percent - monsterReduct) / Percent);
-                                            Console.WriteLine("\n - " + MsgArcherName + " ataca a " + MsgMonsterName + " amb " + archerDMG + " de dany. El monstre es defensa i rep només " + (archerDMG * ((Percent - monsterReduct) / Percent)) + " de dany.");
-                                            Console.ReadKey();
-                                            Console.WriteLine("\n - Monstre: " + monsterHP + " HP");
-                                            currentArcherReduct = archerReduct;
-                                            turnEnded = true;
-                                            break;
+                                        do
+                                        {
+                                            Console.ForegroundColor = ConsoleColor.Yellow;
+                                            Console.Write(MsgCharacterActions + MsgAction);
+                                            Console.ForegroundColor = ConsoleColor.Green;
+                                            actionChosen = Convert.ToInt32(Console.ReadLine());
 
-                                        // Acció de protegir-se
-                                        case Two:
-                                            Console.WriteLine("\n - La " + MsgArcherName + MsgProtect);
-                                            Console.ReadKey();
-                                            currentArcherReduct = archerReduct * Two;
-                                            turnEnded = true;
-                                            break;
-
-                                        // Acció d'habilitat especial. Si te cooldown, torna a demanar una acció.
-                                        case Three:
-
-                                            // Comprova si la pot utilitzar
-                                            if (archerSpecialCooldown > Zero)
+                                            if (Modules.ValidAction(actionChosen))
                                             {
-                                                Console.WriteLine("\n - " + MsgCooldown + archerSpecialCooldown + " torns per poder utilitzar-la.");
-                                                turnEnded = true;
-                                                break;
-                                            }
-                                            else
-                                            {
-                                                Console.WriteLine(MsgArcherSpecial);
-                                                currentArcherReduct = archerReduct;
-                                                archerSpecialCooldown = Five;
-                                                monsterStun = Two;
-                                                turnEnded = true;
-                                                break;
-                                            }
-                                    }
-                                }
-                            }
-
-                            // Comprovem si s'han gastat tots els intents
-                            if (turnTries > Zero)
-                            {
-                                turnTries = Three;
-                                Console.ReadKey();
-                            }
-                            turnEnded = false;
-
-                            // Torn Bàrbar
-                            while (turnTries > Zero && turnEnded == false && barbarianHP > Zero && monsterHP > Zero)
-                            {
-                                Console.Clear();
-                                Console.ForegroundColor = ConsoleColor.Yellow;
-                                Console.WriteLine("--- " + MsgTurn + turn + " ---\n\n");
-
-                                Console.Write(" - " + MsgBarbarianName + " - \n" + MsgCharacterActions + MsgAction);
-                                actionChosen = Convert.ToInt32(Console.ReadLine());
-
-                                // Si la entrada no es vàlida, es treu un intent i es torna a executar el while
-                                if (actionChosen < One || actionChosen > Three)
-                                {
-                                    turnTries--;
-                                    Console.WriteLine(MsgInputNotValid);
-                                    Console.ReadKey();
-                                }
-                                else
-                                {
-                                    Console.ForegroundColor = ConsoleColor.Green;
-                                    // Switch per a executar l'acció escollida pel jugador
-                                    switch (actionChosen)
-                                    {
-                                        // Acció d'atacar
-                                        case One:
-                                            monsterHP -= barbarianDMG * ((Percent - monsterReduct) / Percent);
-                                            Console.WriteLine("\n - " + MsgBarbarianName + " ataca a " + MsgMonsterName + " amb " + barbarianDMG + " de dany. El monstre es defensa i rep només " + (barbarianDMG * ((Percent - monsterReduct) / Percent)) + " de dany.");
-                                            Console.ReadKey();
-                                            Console.WriteLine("\n - Monstre: " + monsterHP + " HP");
-
-                                            if (barbarianReductSpecialTurns <= Zero)
-                                            {
-                                                currentBarbarianReduct = barbarianReduct;
-                                            }
-
-                                            turnEnded = true;
-                                            break;
-
-                                        // Acció de protegir-se
-                                        case Two:
-
-                                            if (barbarianSpecialCooldown > Zero)
-                                            {
-                                                Console.WriteLine("\n - " + MsgBarbarianMaxReduct);
+                                                Console.ForegroundColor = ConsoleColor.Red;
+                                                Console.WriteLine(MsgInputNotValid);
                                                 Console.ReadKey();
-                                                turnEnded = true;
-
+                                                turnTries--;
                                             }
-                                            else
+
+                                        } while (turnTries > Zero && Modules.ValidAction(actionChosen));
+
+
+                                        if (turnTries == Zero)
+                                        {
+                                            Console.WriteLine(MsgOutOfTriesTurn);
+                                            Console.ReadKey();
+                                            turnTries = Three;
+                                        }
+                                        else
+                                        {
+                                            //Depén de la opció escollida per l'usuari es faran 3 coses diferents
+                                            switch (actionChosen)
                                             {
+                                                // Atac
+                                                case One:
+                                                    // Es fa l'acció d'atacar i es resta la vida al monstre
+                                                    Console.WriteLine(Modules.HandleAttack(characterStats[characterTurn[i]], ref monsterStats, characterNames[characterTurn[i]]));
+                                                    Console.ReadKey();
+                                                    Console.Clear();
+                                                    break;
 
-                                                Console.WriteLine("\n - El " + MsgBarbarianName + MsgProtect);
-                                                Console.ReadKey();
-                                                currentBarbarianReduct = barbarianReduct * Two;
-                                                turnEnded = true;
+                                                // Defensa
+                                                case Two:
+                                                    characterProtected[characterTurn[i]] = true;
+                                                    Console.WriteLine(MsgProtect, characterNames[characterTurn[i]]);
+                                                    Console.ReadKey();
+                                                    Console.Clear();
+                                                    break;
+
+                                                // Habilitat especial
+                                                case Three:
+
+                                                    switch (characterTurn[i])
+                                                    {
+                                                        // Habilitat especial arquera
+                                                        case Zero:
+
+                                                            if (archerSpecialCooldown == Zero)
+                                                            {
+                                                                Modules.ArcherSpecial(ref monsterStun);
+                                                                archerSpecialCooldown = Five;
+                                                            }
+                                                            else
+                                                            {
+                                                                Console.WriteLine(MsgCooldown, archerSpecialCooldown);
+                                                            }
+
+                                                            Console.ReadKey();
+                                                            Console.Clear();
+
+
+
+                                                            break;
+
+                                                        // Habilitat especial bàrbar
+                                                        case One:
+
+                                                            if (barbarianSpecialCooldown == Zero)
+                                                            {
+                                                                Modules.BarbarianSpecial(ref barbarianReductSpecialTurns);
+                                                                barbarianSpecialCooldown = Five;
+                                                            }
+                                                            else
+                                                            {
+                                                                Console.WriteLine(MsgCooldown, barbarianSpecialCooldown);
+                                                            }
+
+                                                            Console.ReadKey();
+                                                            Console.Clear();
+
+
+
+                                                            break;
+
+                                                        // Habilitat especial maga
+                                                        case Two:
+
+                                                            if (mageSpecialCooldown == Zero)
+                                                            {
+                                                                Modules.MageSpecial(ref monsterStats, mageStats[Two]);
+                                                                mageSpecialCooldown = Five;
+                                                            }
+                                                            else
+                                                            {
+                                                                Console.WriteLine(MsgCooldown, mageSpecialCooldown);
+                                                            }
+
+                                                            Console.ReadKey();
+                                                            Console.Clear();
+
+
+
+                                                            break;
+
+                                                        // Habilitat especial druida
+                                                        case Three:
+
+                                                            if (druidSpecialCooldown == Zero)
+                                                            {
+                                                                Modules.DruidSpecial(ref characterStats, ref characterNames);
+                                                                druidSpecialCooldown = Five;
+                                                            }
+                                                            else
+                                                            {
+                                                                Console.WriteLine(MsgCooldown, druidSpecialCooldown);
+                                                            }
+
+                                                            Console.ReadKey();
+                                                            Console.Clear();
+
+
+
+                                                            break;
+
+                                                    }
+
+                                                    break;
                                             }
-
-                                            break;
-
-                                        // Acció d'habilitat especial. Si te cooldown, torna a demanar una acció.
-                                        case Three:
-
-                                            // Comprova si la pot utilitzar
-                                            if (barbarianSpecialCooldown > Zero)
-                                            {
-                                                Console.WriteLine("\n - " + MsgCooldown + barbarianSpecialCooldown + " torns per poder utilitzar-la.");
-                                                turnEnded = true;
-                                                break;
-                                            }
-                                            // Defensa al Percent% si no té cooldown
-                                            else
-                                            {
-                                                Console.WriteLine(MsgBarbarianSpecial);
-                                                currentBarbarianReduct = Percent;
-                                                barbarianSpecialCooldown = Five;
-                                                barbarianReductSpecialTurns = Three;
-                                                turnEnded = true;
-                                                break;
-                                            }
+                                        }
                                     }
+
                                 }
-                            }
-
-                            if (turnTries > Zero)
-                            {
-                                turnTries = Three;
-                                Console.ReadKey();
-                            }
-                            turnEnded = false;
-
-                            // Torn Maga
-                            while (turnTries > Zero && turnEnded == false && mageHP > Zero && monsterHP > Zero)
-                            {
-                                Console.Clear();
-                                Console.ForegroundColor = ConsoleColor.Yellow;
-                                Console.WriteLine("--- " + MsgTurn + turn + " ---\n\n");
-
-                                Console.Write(" - " + MsgMageName + " - \n" + MsgCharacterActions + MsgAction);
-                                actionChosen = Convert.ToInt32(Console.ReadLine());
-
-                                // Si la entrada no es vàlida, es treu un intent i es torna a executar el while
-                                if (actionChosen < One || actionChosen > Three)
-                                {
-                                    turnTries--;
-                                    Console.WriteLine(MsgInputNotValid);
-                                    Console.ReadKey();
-                                }
-                                else
-                                {
+                                else{
+                                    gameEnded = true;
                                     Console.ForegroundColor = ConsoleColor.Green;
-                                    // Switch per a executar l'acció escollida pel jugador
-                                    switch (actionChosen)
-                                    {
-
-                                        // Acció d'atacar
-                                        case One:
-                                            monsterHP -= mageDMG * ((Percent - monsterReduct) / Percent);
-                                            Console.WriteLine("\n - " + MsgMageName + " ataca a " + MsgMonsterName + " amb " + mageDMG + " de dany. El monstre es defensa i rep només " + (mageDMG * ((Percent - monsterReduct) / Percent)) + " de dany.");
-                                            Console.ReadKey();
-                                            Console.WriteLine("\n - Monstre: " + monsterHP + " HP");
-
-                                            currentMageReduct = mageReduct;
-                                            turnEnded = true;
-                                            break;
-
-                                        // Acció de protegir-se
-                                        case Two:
-
-                                            Console.WriteLine("\n - La " + MsgMageName + MsgProtect);
-                                            Console.ReadKey();
-                                            currentMageReduct = mageReduct * Two;
-                                            turnEnded = true;
-                                            break;
-
-
-                                        // Acció d'habilitat especial. Si te cooldown, torna a demanar una acció.
-                                        case Three:
-
-                                            // Comprova si la pot utilitzar
-                                            if (mageSpecialCooldown > Zero)
-                                            {
-                                                Console.WriteLine(MsgCooldown + mageSpecialCooldown + " torns per poder utilitzar-la.");
-                                                turnEnded = true;
-                                                break;
-                                            }
-                                            // Fa el dany del seu atac per Three
-                                            else
-                                            {
-                                                currentMageReduct = mageReduct;
-
-                                                Console.WriteLine(MsgMageSpecial);
-
-                                                monsterHP -= mageDMG * Three * ((Percent - monsterReduct) / Percent);
-                                                Console.WriteLine("\n - " + MsgMageName + " ataca a " + MsgMonsterName + " amb " + (mageDMG * 3) + " de dany. El monstre es defensa i rep només " + (mageDMG * Three * ((Percent - monsterReduct) / Percent)) + " de dany.");
-                                                Console.ReadKey();
-                                                Console.WriteLine("\n - Monstre: " + monsterHP + " HP");
-
-
-                                                mageSpecialCooldown = Five;
-                                                turnEnded = true;
-                                                break;
-                                            }
-                                    }
-                                }
-                            }
-
-                            if (turnTries > Zero)
-                            {
-                                turnTries = Three;
-                                Console.ReadKey();
-                            }
-                            turnEnded = false;
-
-                            // Torn Druida
-                            while (turnTries > Zero && turnEnded == false && druidHP > Zero && monsterHP > Zero)
-                            {
-                                Console.Clear();
-                                Console.ForegroundColor = ConsoleColor.Yellow;
-                                Console.WriteLine("--- " + MsgTurn + turn + " ---\n\n");
-
-                                Console.Write(" - " + MsgDruidName + " - \n" + MsgCharacterActions + MsgAction);
-                                actionChosen = Convert.ToInt32(Console.ReadLine());
-
-                                // Si la entrada no es vàlida, es treu un intent i es torna a executar el while
-                                if (actionChosen < One || actionChosen > Three)
-                                {
-                                    turnTries--;
-                                    Console.WriteLine(MsgInputNotValid);
+                                    Console.WriteLine(MsgWon);
                                     Console.ReadKey();
-                                }
-                                else
-                                {
-                                    Console.ForegroundColor = ConsoleColor.Green;
-                                    // Switch per a executar l'acció escollida pel jugador
-                                    switch (actionChosen)
-                                    {
-
-                                        // Acció d'atacar
-                                        case One:
-                                            monsterHP -= druidDMG * ((Percent - monsterReduct) / Percent);
-                                            Console.WriteLine("\n - " + MsgDruidName + " ataca a " + MsgMonsterName + " amb " + druidDMG + " de dany. El monstre es defensa i rep només " + (druidDMG * ((Percent - monsterReduct) / Percent)) + " de dany.");
-                                            Console.ReadKey();
-                                            Console.WriteLine("\n - Monstre: " + monsterHP + " HP");
-                                            currentDruidReduct = druidReduct;
-                                            turnEnded = true;
-                                            break;
-
-                                        // Acció de protegir-se
-                                        case Two:
-
-                                            Console.WriteLine("\n - El " + MsgDruidName + MsgProtect);
-                                            Console.ReadKey();
-                                            currentDruidReduct = druidReduct * Two;
-                                            turnEnded = true;
-                                            break;
-
-
-                                        // Acció d'habilitat especial. Si te cooldown, torna a demanar una acció.
-                                        case Three:
-
-                                            // Comprova si la pot utilitzar
-                                            if (druidSpecialCooldown > Zero)
-                                            {
-                                                Console.WriteLine("\n - " + MsgCooldown + druidSpecialCooldown + " torns per poder utilitzar-la.");
-                                                turnEnded = true;
-                                                break;
-                                            }
-                                            // Cura a tothom 500 de vida si están vius
-                                            else
-                                            {
-                                                currentDruidReduct = druidReduct;
-
-                                                Console.WriteLine("\n - " + MsgDruidSpecial);
-
-                                                // Comprovem que el personatge estigui viu
-                                                if (archerHP > Zero)
-                                                {
-                                                    // Operador ternari per que la cura no sobrepassi la vida màxima
-                                                    archerHP = archerHP + DruidHeal > archerMaxHP ? archerHP = archerMaxHP : archerHP += DruidHeal;
-                                                }
-
-                                                // Comprovem que el personatge estigui viu
-                                                if (barbarianHP > Zero)
-                                                {
-                                                    // Operador ternari per que la cura no sobrepassi la vida màxima
-                                                    barbarianHP = barbarianHP + DruidHeal > barbarianMaxHP ? barbarianHP = barbarianMaxHP : barbarianHP += DruidHeal;
-                                                }
-
-                                                // Comprovem que el personatge estigui viu
-                                                if (mageHP > Zero)
-                                                {
-                                                    // Operador ternari per que la cura no sobrepassi la vida màxima
-                                                    mageHP = mageHP + DruidHeal > mageMaxHP ? mageHP = mageMaxHP : mageHP += DruidHeal;
-                                                }
-
-                                                // En el cas del Druida no comprovem si està viu ja que si no ho estigués no podria fer l'habilitat especial
-                                                druidHP = druidHP + DruidHeal > druidMaxHP ? druidHP = druidMaxHP : druidHP += DruidHeal;
-
-                                                druidSpecialCooldown = 5;
-                                                turnEnded = true;
-                                                break;
-                                            }
-                                    }
+                                    Console.Clear();
                                 }
                             }
 
-                            if (turnTries > Zero)
+                            // Es comprova que el monstre estigui viu
+                            if (Modules.CheckMonsterAlive(monsterStats[One]))
                             {
-                                turnTries = Three;
-                                Console.ReadKey();
-                            }
-                            turnEnded = false;
+                                // Torn de monstre
 
-
-                            // Torn monstre
-
-                            if (monsterHP > Zero && turnTries > Zero)
-                            {
-
-                                Console.Clear();
-                                Console.WriteLine("--- " + MsgTurn + turn + " ---");
                                 Console.ForegroundColor = ConsoleColor.Red;
+                                Console.WriteLine(MsgMonsterTurn);
 
-                                // Comprovem si pot atacar o no depenent de si s'ha activat l'habilitat de l'arquera
+                                // Si el monstre està stunnejat no pot atacar
                                 if (monsterStun > Zero)
                                 {
+                                    Console.ForegroundColor = ConsoleColor.Green;
                                     Console.WriteLine(MsgMonsterCantAttack);
                                     Console.ReadKey();
-                                    monsterStun--;
+                                    Console.Clear();
                                 }
                                 else
                                 {
-                                    Console.WriteLine(MsgMonsterAttack + "\n");
 
-                                    // Ataca a l'arquera si està viva
-
-                                    if (archerHP > Zero)
+                                    for(int i = Zero; i < Four; i++)
                                     {
-                                        archerHP -= monsterDMG * ((Percent - currentArcherReduct) / Percent);
-                                        Console.WriteLine(MsgMonsterName + " ataca a " + MsgArcherName + " amb " + monsterDMG + " de dany. L'arquera es defensa i rep només " + (monsterDMG * ((Percent - currentArcherReduct) / Percent)) + " de dany. Vida restant de l'Arquera: " + archerHP + " HP");
 
-                                        // Comprovem si ha mort per comunicar-ho al jugador
-                                        if (archerHP <= Zero) Console.WriteLine(MsgArcherDied);
-                                        Console.ReadKey();
+                                        // El monstre ataca (s'executa un módul diferent si es el bàrbar)
+                                        if (i == One)
+                                        {
+                                            // Comprova si el personatge està viu
+                                            if (characterStats[i][One] > Zero)
+                                            {
+                                                Console.WriteLine(MsgMonsterAttack);
+                                                Console.WriteLine(Modules.MonsterAttack(monsterStats[Two], ref characterStats[i], characterNames[i], characterProtected[i], barbarianReductSpecialTurns));
+                                                if (Modules.CheckDeadCharacter(characterStats[i][One])) Console.WriteLine(MsgCharacterDead, characterNames[i], msgCharacterType[i]);
+                                                Console.ReadKey();
+                                                Console.Clear();
+                                            }
+                                            
+                                        }
+                                        else 
+                                        {
+                                            if (characterStats[i][One] > Zero)
+                                            {
+                                                Console.WriteLine(MsgMonsterAttack);
+                                                Console.WriteLine(Modules.MonsterAttack(monsterStats[Two], ref characterStats[i], characterNames[i], characterProtected[i]));
+                                                if (Modules.CheckDeadCharacter(characterStats[i][One])) Console.WriteLine(MsgCharacterDead, characterNames[i], msgCharacterType[i]);
+                                                Console.ReadKey();
+                                                Console.Clear();
+                                            }
+                                        }
                                     }
+                                }
 
-                                    // Ataca al bàrbar si està viu
-
-                                    if (barbarianHP > Zero)
-                                    {
-                                        barbarianHP -= monsterDMG * ((Percent - currentBarbarianReduct) / Percent);
-                                        Console.WriteLine(MsgMonsterName + " ataca a " + MsgBarbarianName + " amb " + monsterDMG + " de dany. El bàrbar es defensa i rep només " + (monsterDMG * ((Percent - currentBarbarianReduct) / Percent)) + " de dany. Vida restant del bàrbar: " + barbarianHP + " HP");
-
-                                        // Comprovem si ha mort per comunicar-ho al jugador
-                                        if (barbarianHP <= Zero) Console.WriteLine(MsgBarbarianDied);
-                                        Console.ReadKey();
-                                    }
-
-                                    // Ataca a la maga si esta viva
-                                    if (mageHP > Zero)
-                                    {
-                                        mageHP -= monsterDMG * ((Percent - currentMageReduct) / Percent);
-                                        Console.WriteLine(MsgMonsterName + " ataca a " + MsgMageName + " amb " + monsterDMG + " de dany. La maga es defensa i rep només " + (monsterDMG * ((Percent - currentMageReduct) / Percent)) + " de dany. Vida restant de la maga: " + mageHP + " HP");
-
-                                        // Comprovem si ha mort per comunicar-ho al jugador
-                                        if (mageHP <= Zero) Console.WriteLine(MsgMageDied);
-                                        Console.ReadKey();
-                                    }
-
-                                    // Ataca al druida si està viu
-                                    if (druidHP > Zero)
-                                    {
-                                        druidHP -= monsterDMG * ((Percent - currentDruidReduct) / Percent);
-                                        Console.WriteLine(MsgMonsterName + " ataca a " + MsgDruidName + " amb " + monsterDMG + " de dany. El druida es defensa i rep només " + (monsterDMG * ((Percent - currentDruidReduct) / Percent)) + " de dany. Vida restant del druida: " + druidHP + " HP");
-
-                                        // Comprovem si ha mort per comunicar-ho al jugador
-                                        if (druidHP <= Zero) Console.WriteLine(MsgDruidDied);
-                                        Console.ReadKey();
-                                    }
-
+                                // Es comprova si algún personatge segueix viu
+                                if (Modules.CheckGameLost(characterStats))
+                                {
+                                    Console.ForegroundColor = ConsoleColor.Red;
+                                    Console.WriteLine(MsgLost);
+                                    gameEnded = true;
+                                    Console.ReadKey();
+                                    Console.Clear();
+                                }
+                                // Si si, es printa la vida de cada personatge i del monstre de forma descendent
+                                else
+                                {
+                                    double[] currentHP = {characterStats[Zero][One], characterStats[One][One], characterStats[Two][One], characterStats[Three][One]};
+                                    double[] orderedHP = Modules.OrderDesc(currentHP);
+                                    Modules.PrintHP(orderedHP, characterStats[Zero][One], characterStats[One][One], characterStats[Two][One], characterStats[Three][One]);
                                 }
 
                             }
 
-                            turn++;
-                        }
+                            // Si no, s'acaba el joc i es torna al menú principal
+                            else
+                            {
+                                gameEnded = true;
+                                Console.ForegroundColor = ConsoleColor.Green;
+                                Console.WriteLine(MsgWon);
+                                Console.ReadKey();
+                                Console.Clear();
+                            }
 
-                        // Quan s'acaba la partida comprovem qui ha perdut
+                            // Es resta un als cooldowns si hi ha
+                            Modules.ReduceCooldowns(ref archerSpecialCooldown, ref barbarianSpecialCooldown, ref mageSpecialCooldown, ref druidSpecialCooldown, ref barbarianReductSpecialTurns, ref monsterStun);
 
-                        if (turnTries == Zero)// Tanca el joc si t'has quedat sense intents
-                        {
-                            Console.ForegroundColor = ConsoleColor.Red;
-                            Console.WriteLine(MsgOutOfTries + " Adéu!");
-                            Console.ReadKey();
-                            Console.Clear();
-                            exitGame = true;
-                        }
-                        else if (monsterHP > Zero) // Tanca el joc si t'has quedat sense intents
-                        {
-                            Console.WriteLine(MsgDecoration);
-                            Console.ForegroundColor = ConsoleColor.Red;
-                            Console.WriteLine(MsgLost);
-                            Console.ReadKey();
-                            Console.Clear();
-                        }
-                        else
-                        {
-                            Console.WriteLine(MsgDecoration);
-                            Console.ForegroundColor = ConsoleColor.Green;
-                            Console.WriteLine(MsgWon);
-                            Console.ReadKey();
-                            Console.Clear();
+                            // Es reseteja la protecció
+                            for (int i = 0; i < characterProtected.Length; i++) characterProtected[i] = false;
                         }
 
                         break;
-        */
                 }
             }
         }
